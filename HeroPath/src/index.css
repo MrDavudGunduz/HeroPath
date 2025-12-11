@@ -1,0 +1,19 @@
+/**
+ * Global Styles
+ * 
+ * This file contains global CSS styles and Tailwind CSS directives.
+ * Tailwind directives inject base styles, component classes, and utility classes.
+ */
+
+/* Tailwind CSS Directives */
+@tailwind base;        /* Base styles (normalize, reset, etc.) */
+@tailwind components;  /* Component classes (reusable component styles) */
+@tailwind utilities;   /* Utility classes (margin, padding, colors, etc.) */
+
+/* Custom Base Layer Styles */
+@layer base {
+  /* Global body styles - applied to the entire application */
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}

@@ -7,7 +7,7 @@
 
 ## 📋 Table of Contents
 1. [Phase 1: Core Infrastructure & Setup (Week 1)](#phase-1-core-infrastructure--setup-week-1)
-2. [Phase 2: Core Features & State Management (Week 2)](#phase-2-core-features--state-management-week-2)
+2. [Phase 2: Core Features & State Management (Week 2)]    (#phase-2-core-features--state-management-week-2)
 3. [Phase 3: Gamification Mechanics (Week 3)](#phase-3-gamification-mechanics-week-3)
 4. [Phase 4: Polish, Testing & Deployment (Week 4)](#phase-4-polish-testing--deployment-week-4)
 5. [Phase 5: Unique & Innovative Features (Post-MVP)](#phase-5-unique--innovative-features-post-mvp)
@@ -30,11 +30,11 @@
 #### 1.1 Project Setup (Day 1-2)
 ```bash
 # To-dos:
-- [ ] Vite + React + TypeScript template setup
-- [ ] ESLint + Prettier configuration
-- [ ] Tailwind CSS installation and configuration
-- [ ] Git repository initialization
-- [ ] .gitignore and README.md preparation
+- [x] Vite + React + TypeScript template setup
+- [x] ESLint + Prettier configuration
+- [x] Tailwind CSS installation and configuration
+- [x] Git repository initialization
+- [x] .gitignore and README.md preparation
 ```
 
 **File Structure:**

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Avatar Component Props
@@ -33,7 +34,7 @@ const Avatar: React.FC<AvatarProps> = ({
   size = 'md',
   level,
   showLevel = false,
-  className = '',
+  className,
 }) => {
   const sizeClasses = {
     xs: 'w-6 h-6 text-xs',
@@ -44,14 +45,13 @@ const Avatar: React.FC<AvatarProps> = ({
   };
 
   const baseClasses = 'inline-flex items-center justify-center rounded-full bg-hero-primary text-white font-semibold overflow-hidden border-2 border-white shadow-md';
-  const avatarClasses = `${baseClasses} ${sizeClasses[size]} ${className}`.trim();
 
   // Generate initials from alt text if not provided
   const displayInitials = initials || (alt ? alt.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '?');
 
   return (
     <div className="relative inline-block">
-      <div className={avatarClasses}>
+      <div className={cn(baseClasses, sizeClasses[size], className)}>
         {src ? (
           <img
             src={src}

@@ -1,5 +1,6 @@
 import React from 'react';
 import Avatar from './Avatar';
+import { cn } from '../utils/cn';
 
 /**
  * Header/Navbar Component Props
@@ -36,10 +37,15 @@ const Header: React.FC<HeaderProps> = ({
   userName,
   navItems,
   actions,
-  className = '',
+  className,
 }) => {
   return (
-    <header className={`bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 border-b border-purple-500/30 backdrop-blur-lg ${className}`}>
+    <header
+      className={cn(
+        'bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 border-b border-purple-500/30 backdrop-blur-lg',
+        className,
+      )}
+    >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo and Title */}

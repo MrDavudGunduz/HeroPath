@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Modal Component Props
@@ -39,8 +40,13 @@ const Modal: React.FC<ModalProps> = ({
   size = 'md',
   closeOnOverlayClick = true,
   closeOnEscape = true,
-  className = '',
+  className,
 }) => {
+  const titleId = useId();
+  const descriptionId = useId();
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+
   // Handle Escape key press
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return;
@@ -54,6 +60,29 @@ const Modal: React.FC<ModalProps> = ({
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, closeOnEscape, onClose]);
+
+  // Focus management: capture previous focus and move focus into the dialog.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+
+    // Wait for paint so refs are ready.
+    requestAnimationFrame(() => {
+      const root = panelRef.current;
+      if (!root) return;
+
+      const focusable = root.querySelector<HTMLElement>(
+        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])',
+      );
+      (focusable ?? root).focus();
+    });
+
+    return () => {
+      previouslyFocusedRef.current?.focus?.();
+      previouslyFocusedRef.current = null;
+    };
+  }, [isOpen]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -83,19 +112,63 @@ const Modal: React.FC<ModalProps> = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Tab') return;
+    const root = panelRef.current;
+    if (!root) return;
+
+    const focusables = Array.from(
+      root.querySelectorAll<HTMLElement>(
+        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((el) => !el.hasAttribute('disabled') && el.tabIndex !== -1);
+
+    if (focusables.length === 0) {
+      e.preventDefault();
+      root.focus();
+      return;
+    }
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+
+    if (e.shiftKey) {
+      if (!active || active === first) {
+        e.preventDefault();
+        last.focus();
+      }
+      return;
+    }
+
+    if (active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
       onClick={handleOverlayClick}
     >
       <div
-        className={`gaming-card ${sizeClasses[size]} w-full ${className}`}
+        ref={panelRef}
+        className={cn('gaming-card w-full', sizeClasses[size], className)}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleKeyDown}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        aria-describedby={descriptionId}
+        tabIndex={-1}
       >
         {/* Header */}
         {title && (
           <div className="flex items-center justify-between px-6 py-4 border-b border-purple-500/20">
-            <h2 className="text-xl font-semibold gradient-text">{title}</h2>
+            <h2 id={titleId} className="text-xl font-semibold gradient-text">
+              {title}
+            </h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors hover:scale-110"
@@ -119,7 +192,9 @@ const Modal: React.FC<ModalProps> = ({
         )}
 
         {/* Content */}
-        <div className="px-6 py-4 text-gray-300">{children}</div>
+        <div id={descriptionId} className="px-6 py-4 text-gray-300">
+          {children}
+        </div>
 
         {/* Footer */}
         {footer && (

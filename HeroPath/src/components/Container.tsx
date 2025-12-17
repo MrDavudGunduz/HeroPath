@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Container Component Props
@@ -24,7 +25,7 @@ const Container: React.FC<ContainerProps> = ({
   children,
   maxWidth = 'xl',
   padding = 'md',
-  className = '',
+  className,
 }) => {
   const maxWidthClasses = {
     sm: 'max-w-screen-sm',
@@ -42,9 +43,11 @@ const Container: React.FC<ContainerProps> = ({
     lg: 'px-6 md:px-8',
   };
 
-  const containerClasses = `mx-auto ${maxWidthClasses[maxWidth]} ${paddingClasses[padding]} ${className}`.trim();
-
-  return <div className={containerClasses}>{children}</div>;
+  return (
+    <div className={cn('mx-auto', maxWidthClasses[maxWidth], paddingClasses[padding], className)}>
+      {children}
+    </div>
+  );
 };
 
 export default Container;

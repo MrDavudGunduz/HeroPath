@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Button Component Props
@@ -34,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   leftIcon,
   rightIcon,
   children,
-  className = '',
+  className,
   disabled,
   ...props
 }) => {
@@ -57,14 +58,18 @@ const Button: React.FC<ButtonProps> = ({
   
   // Width classes
   const widthClasses = fullWidth ? 'w-full' : '';
-  
-  // Combine all classes
-  const buttonClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClasses} ${className}`.trim();
 
   return (
     <button
-      className={buttonClasses}
+      className={cn(
+        baseClasses,
+        variantClasses[variant],
+        sizeClasses[size],
+        widthClasses,
+        className,
+      )}
       disabled={disabled || loading}
+      aria-busy={loading || undefined}
       {...props}
     >
       {loading && (
@@ -73,6 +78,7 @@ const Button: React.FC<ButtonProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <circle
             className="opacity-25"

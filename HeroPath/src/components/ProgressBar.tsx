@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * ProgressBar Component Props
@@ -36,7 +37,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   label,
   size = 'md',
   animated = true,
-  className = '',
+  className,
 }) => {
   // Calculate percentage
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
@@ -67,9 +68,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     xp: 'shadow-glow-xp',
     level: 'shadow-glow-level',
   };
-  
-  const barClasses = `${baseBarClasses} ${sizeClasses[size]} ${className}`.trim();
-  const fillClasses = `${variantGradients[variant]} ${animationClasses} ${glowClasses[variant]} h-full rounded-full relative overflow-hidden`.trim();
 
   return (
     <div className="w-full">
@@ -83,9 +81,14 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           )}
         </div>
       )}
-      <div className={barClasses}>
+      <div className={cn(baseBarClasses, sizeClasses[size], className)}>
         <div
-          className={fillClasses}
+          className={cn(
+            variantGradients[variant],
+            animationClasses,
+            glowClasses[variant],
+            'h-full rounded-full relative overflow-hidden',
+          )}
           style={{ width: `${percentage}%` }}
           role="progressbar"
           aria-valuenow={value}

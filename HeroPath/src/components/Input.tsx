@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useId } from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Input Component Props
@@ -30,17 +31,19 @@ const Input: React.FC<InputProps> = ({
   leftIcon,
   rightIcon,
   fullWidth = false,
-  className = '',
+  className,
   id,
   ...props
 }) => {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const reactId = useId();
+  const inputId = id ?? `input-${reactId}`;
+  const errorId = error ? `${inputId}-error` : undefined;
+  const helperId = helperText && !error ? `${inputId}-help` : undefined;
+  const describedBy = [errorId, helperId].filter(Boolean).join(' ') || undefined;
   
   const baseInputClasses = 'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 bg-gray-800/50 text-white placeholder-gray-400';
   const normalInputClasses = 'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50';
   const errorInputClasses = 'border-hero-danger focus:border-hero-danger focus:ring-hero-danger focus:shadow-glow-danger/50';
-  const inputClasses = `${baseInputClasses} ${error ? errorInputClasses : normalInputClasses} ${leftIcon ? 'pl-10' : ''} ${rightIcon ? 'pr-10' : ''} ${className}`.trim();
-  
   const widthClasses = fullWidth ? 'w-full' : '';
 
   return (
@@ -61,7 +64,15 @@ const Input: React.FC<InputProps> = ({
         )}
         <input
           id={inputId}
-          className={inputClasses}
+          className={cn(
+            baseInputClasses,
+            error ? errorInputClasses : normalInputClasses,
+            leftIcon && 'pl-10',
+            rightIcon && 'pr-10',
+            className,
+          )}
+          aria-invalid={Boolean(error) || undefined}
+          aria-describedby={describedBy}
           {...props}
         />
         {rightIcon && (
@@ -71,10 +82,14 @@ const Input: React.FC<InputProps> = ({
         )}
       </div>
       {error && (
-        <p className="mt-1 text-sm text-hero-danger">{error}</p>
+        <p id={errorId} className="mt-1 text-sm text-hero-danger">
+          {error}
+        </p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-sm text-gray-400">{helperText}</p>
+        <p id={helperId} className="mt-1 text-sm text-gray-400">
+          {helperText}
+        </p>
       )}
     </div>
   );

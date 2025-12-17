@@ -1,12 +1,4 @@
-export type TaskId = string;
-
-export interface Task {
-  id: TaskId;
-  title: string;
-  description?: string;
-  completed: boolean;
-  createdAt: number; // epoch ms
-  completedAt?: number; // epoch ms
-}
+// Backwards-compatible re-export.
+export type { Task, TaskId } from '../features/tasks';
 
 

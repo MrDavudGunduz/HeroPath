@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Card Component Props
@@ -36,11 +37,10 @@ const Card: React.FC<CardProps> = ({
   headerActions,
   hover = false,
   padding = 'md',
-  className = '',
+  className,
 }) => {
   const baseCardClasses = 'gaming-card rounded-2xl overflow-hidden';
   const hoverClasses = hover ? 'transition-all duration-300' : '';
-  const cardClasses = `${baseCardClasses} ${hoverClasses} ${className}`.trim();
   
   const paddingClasses = {
     none: '',
@@ -50,9 +50,9 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div className={cardClasses}>
+    <div className={cn(baseCardClasses, hoverClasses, className)}>
       {(title || subtitle || headerActions) && (
-        <div className={`${paddingClasses[padding]} pb-3 border-b border-purple-500/20`}>
+        <div className={cn(paddingClasses[padding], 'pb-3 border-b border-purple-500/20')}>
           <div className="flex items-start justify-between">
             <div>
               {title && (
@@ -72,7 +72,7 @@ const Card: React.FC<CardProps> = ({
         {children}
       </div>
       {footer && (
-        <div className={`${paddingClasses[padding]} pt-3 border-t border-purple-500/20`}>
+        <div className={cn(paddingClasses[padding], 'pt-3 border-t border-purple-500/20')}>
           {footer}
         </div>
       )}

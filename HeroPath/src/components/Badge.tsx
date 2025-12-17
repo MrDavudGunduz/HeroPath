@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../utils/cn';
 
 /**
  * Badge Component Props
@@ -27,7 +28,7 @@ const Badge: React.FC<BadgeProps> = ({
   variant = 'primary',
   size = 'md',
   icon,
-  className = '',
+  className,
 }) => {
   const baseBadgeClasses = 'inline-flex items-center font-semibold rounded-full px-3 py-1 backdrop-blur-sm border';
   
@@ -48,10 +49,8 @@ const Badge: React.FC<BadgeProps> = ({
     lg: 'px-3 py-1.5 text-base',
   };
   
-  const badgeClasses = `${baseBadgeClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`.trim();
-
   return (
-    <span className={badgeClasses}>
+    <span className={cn(baseBadgeClasses, variantClasses[variant], sizeClasses[size], className)}>
       {icon && <span className="mr-1">{icon}</span>}
       {children}
     </span>

@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC, ReactNode } from 'react';
 import Avatar from './Avatar';
 import { cn } from '../utils/cn';
 
@@ -20,7 +20,7 @@ export interface HeaderProps {
     active?: boolean;
   }>;
   /** Header actions (buttons, etc.) */
-  actions?: React.ReactNode;
+  actions?: ReactNode;
   /** Additional CSS classes */
   className?: string;
 }
@@ -31,7 +31,7 @@ export interface HeaderProps {
  * Application header with navigation, user info, and actions.
  * Displays hero character avatar and level for gamification.
  */
-const Header: React.FC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   userLevel,
   userAvatar,
   userName,

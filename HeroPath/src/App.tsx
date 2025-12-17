@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Header, Container, Card, Button, Badge, ProgressBar, Input, Textarea, Modal } from './components';
 
 /**
@@ -13,7 +13,7 @@ import { Header, Container, Card, Button, Badge, ProgressBar, Input, Textarea, M
  * - Narrative journey system
  * - User progress dashboard
  */
-const App: React.FC = () => {
+const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

@@ -1,10 +1,10 @@
-import React from 'react';
+import type { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import { cn } from '../utils/cn';
 
 /**
  * Button Component Props
  */
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Button variant style */
   variant?: 'primary' | 'secondary' | 'ghost';
   /** Button size */
@@ -14,11 +14,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /** Full width button */
   fullWidth?: boolean;
   /** Icon to display before text */
-  leftIcon?: React.ReactNode;
+  leftIcon?: ReactNode;
   /** Icon to display after text */
-  rightIcon?: React.ReactNode;
+  rightIcon?: ReactNode;
   /** Children content */
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 /**
@@ -27,7 +27,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * A versatile button component with multiple variants and sizes.
  * Supports loading states, icons, and full-width option.
  */
-const Button: React.FC<ButtonProps> = ({
+const Button: FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   loading = false,

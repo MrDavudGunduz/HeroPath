@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Task, TaskId } from '../types/task';
+import { taskDraftSchema } from '../validation/task';
 
 type TaskDraft = {
   title: string;
@@ -9,11 +10,13 @@ type TaskDraft = {
 
 interface TaskState {
   tasks: Task[];
+  lastError?: string;
 
   addTask: (draft: TaskDraft) => void;
   toggleTask: (id: TaskId) => void;
   removeTask: (id: TaskId) => void;
   clearCompleted: () => void;
+  clearError: () => void;
 }
 
 function makeId(): TaskId {
@@ -29,21 +32,30 @@ export const useTaskStore = create<TaskState>()(
   persist(
     (set) => ({
       tasks: [],
+      lastError: undefined,
 
       addTask: ({ title, description }) => {
-        const trimmed = title.trim();
-        if (!trimmed) return;
+        const parsed = taskDraftSchema.safeParse({ title, description });
+        if (!parsed.success) {
+          const message =
+            parsed.error.issues[0]?.message ?? 'Invalid task input';
+          set({ lastError: message });
+          return;
+        }
 
         const now = Date.now();
         const task: Task = {
           id: makeId(),
-          title: trimmed,
-          description: description?.trim() ? description.trim() : undefined,
+          title: parsed.data.title,
+          description:
+            parsed.data.description && parsed.data.description.trim()
+              ? parsed.data.description.trim()
+              : undefined,
           completed: false,
           createdAt: now,
         };
 
-        set((state) => ({ tasks: [task, ...state.tasks] }));
+        set((state) => ({ tasks: [task, ...state.tasks], lastError: undefined }));
       },
 
       toggleTask: (id) => {
@@ -66,6 +78,8 @@ export const useTaskStore = create<TaskState>()(
 
       clearCompleted: () =>
         set((state) => ({ tasks: state.tasks.filter((t) => !t.completed) })),
+
+      clearError: () => set({ lastError: undefined }),
     }),
     {
       name: 'heropath.tasks.v1',

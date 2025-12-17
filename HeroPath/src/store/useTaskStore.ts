@@ -17,7 +17,11 @@ interface TaskState {
 }
 
 function makeId(): TaskId {
-  // Good enough for local-only IDs; can be swapped with nanoid/uuid later.
+  // Prefer collision-resistant, native UUIDs in modern browsers.
+  // Fallback keeps it working in older environments without Web Crypto.
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 

@@ -12,6 +12,13 @@ export const taskDraftSchema = z.object({
     .max(2000, 'Description is too long (max 2000 chars)')
     .optional()
     .or(z.literal('')),
+  difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
+  category: z.string().trim().max(50, 'Category is too long (max 50 chars)').optional(),
+  emotionalState: z
+    .enum(['excited', 'calm', 'challenged', 'satisfied'])
+    .optional(),
+  storyChapter: z.string().trim().max(100, 'Story chapter is too long (max 100 chars)').optional(),
+  xpValue: z.number().int().min(1).max(1000).optional(),
 });
 
 export type TaskDraftInput = z.input<typeof taskDraftSchema>;

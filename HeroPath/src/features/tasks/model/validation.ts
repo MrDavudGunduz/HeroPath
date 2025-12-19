@@ -4,7 +4,7 @@ export const taskDraftSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(1, 'Task title is required')
+    .min(3, 'Task title must be at least 3 characters')
     .max(120, 'Task title is too long (max 120 chars)'),
   description: z
     .string()

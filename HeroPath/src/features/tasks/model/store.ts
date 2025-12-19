@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware';
 import type { Task, TaskId } from './task';
 import { taskDraftSchema } from './validation';
 import { useProgressStore } from '../../../store/useProgressStore';
+import { createHeroPathStorage } from '../../../utils/zustandStorage';
+import { createTaskStoreMigrations } from '../../../utils/migrations';
 
 type TaskDraft = {
   title: string;
@@ -21,8 +23,11 @@ export interface TaskState {
   addTask: (draft: TaskDraft) => void;
   toggleTask: (id: TaskId) => void;
   removeTask: (id: TaskId) => void;
+  updateTask: (id: TaskId, updates: Partial<Task>) => void;
   clearCompleted: () => void;
   clearError: () => void;
+  getTasksByCategory: (category: string) => Task[];
+  getTasksByDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => Task[];
 }
 
 function makeId(): TaskId {
@@ -111,14 +116,53 @@ export const useTaskStore = create<TaskState>()(
       removeTask: (id) =>
         set((state) => ({ tasks: state.tasks.filter((t) => t.id !== id) })),
 
+      updateTask: (id, updates) => {
+        set((state) => {
+          const task = state.tasks.find((t) => t.id === id);
+          if (!task) return state;
+
+          // If difficulty is being updated, recalculate XP if not explicitly provided
+          let updatedXP = updates.xpValue;
+          if (updates.difficulty && !updates.xpValue) {
+            updatedXP = calculateXPValue(updates.difficulty);
+          }
+
+          return {
+            tasks: state.tasks.map((t) =>
+              t.id === id
+                ? {
+                    ...t,
+                    ...updates,
+                    ...(updatedXP !== undefined && { xpValue: updatedXP }),
+                  }
+                : t,
+            ),
+            lastError: undefined,
+          };
+        });
+      },
+
       clearCompleted: () =>
         set((state) => ({ tasks: state.tasks.filter((t) => !t.completed) })),
 
       clearError: () => set({ lastError: undefined }),
+
+      getTasksByCategory: (category) => {
+        const state = useTaskStore.getState();
+        return state.tasks.filter(
+          (task) => task.category?.toLowerCase() === category.toLowerCase(),
+        );
+      },
+
+      getTasksByDifficulty: (difficulty) => {
+        const state = useTaskStore.getState();
+        return state.tasks.filter((task) => task.difficulty === difficulty);
+      },
     }),
     {
-      name: 'heropath.tasks.v1',
+      name: 'tasks.v1',
       version: 1,
+      storage: createHeroPathStorage('tasks.v1', 1, createTaskStoreMigrations()),
     },
   ),
 );

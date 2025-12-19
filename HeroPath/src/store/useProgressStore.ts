@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { UserProgress, HeroCharacter, SkillTree } from '../types/progress';
+import { createHeroPathStorage } from '../utils/zustandStorage';
+import { createProgressStoreMigrations } from '../utils/migrations';
 
 export interface ProgressState {
   progress: UserProgress;
@@ -223,8 +225,9 @@ export const useProgressStore = create<ProgressState>()(
       },
     }),
     {
-      name: 'heropath.progress.v1',
+      name: 'progress.v1',
       version: 1,
+      storage: createHeroPathStorage('progress.v1', 1, createProgressStoreMigrations()),
     },
   ),
 );

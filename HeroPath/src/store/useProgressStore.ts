@@ -239,7 +239,7 @@ export const useProgressStore = create<ProgressState>()(
         'progress.v1',
         1,
         createProgressStoreMigrations()
-      ),
+      ) as any,
     }
   )
 );

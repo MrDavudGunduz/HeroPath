@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Card, Button, Badge } from '../../../components';
 import { useTaskStore } from '../model/store';
+import type { Task } from '../model/task';
 import { TaskItem } from './TaskItem';
 import {
   TaskFilters,
@@ -9,12 +10,12 @@ import {
 } from './TaskFilters';
 
 export function TaskList() {
-  const allTasks = useTaskStore((s) => s.tasks);
-  const toggleTask = useTaskStore((s) => s.toggleTask);
-  const removeTask = useTaskStore((s) => s.removeTask);
-  const clearCompleted = useTaskStore((s) => s.clearCompleted);
-  const getTasksByCategory = useTaskStore((s) => s.getTasksByCategory);
-  const getTasksByDifficulty = useTaskStore((s) => s.getTasksByDifficulty);
+  const allTasks = useTaskStore((s: any) => s.tasks);
+  const toggleTask = useTaskStore((s: any) => s.toggleTask);
+  const removeTask = useTaskStore((s: any) => s.removeTask);
+  const clearCompleted = useTaskStore((s: any) => s.clearCompleted);
+  const getTasksByCategory = useTaskStore((s: any) => s.getTasksByCategory);
+  const getTasksByDifficulty = useTaskStore((s: any) => s.getTasksByDifficulty);
 
   const [filter, setFilter] = useState<FilterType>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('');
@@ -28,10 +29,10 @@ export function TaskList() {
 
     switch (filter) {
       case 'active':
-        filtered = filtered.filter((t) => !t.completed);
+        filtered = filtered.filter((t: Task) => !t.completed);
         break;
       case 'completed':
-        filtered = filtered.filter((t) => t.completed);
+        filtered = filtered.filter((t: Task) => t.completed);
         break;
       case 'category':
         if (categoryFilter) {
@@ -59,7 +60,7 @@ export function TaskList() {
     getTasksByDifficulty,
   ]);
 
-  const completedCount = allTasks.filter((t) => t.completed).length;
+  const completedCount = allTasks.filter((t: Task) => t.completed).length;
   const activeCount = allTasks.length - completedCount;
 
   return (
@@ -121,7 +122,7 @@ export function TaskList() {
         </div>
       ) : (
         <ul className="space-y-3">
-          {tasks.map((t) => (
+          {tasks.map((t: Task) => (
             <TaskItem
               key={t.id}
               task={t}

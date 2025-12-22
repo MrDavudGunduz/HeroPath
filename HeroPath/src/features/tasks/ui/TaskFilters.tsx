@@ -33,12 +33,12 @@ export function TaskFilters({
   onCategoryChange,
   onDifficultyChange,
 }: TaskFiltersProps) {
-  const tasks = useTaskStore((s) => s.tasks);
+  const tasks = useTaskStore((s: any) => s.tasks);
 
   // Get unique categories from tasks
   const categories = useMemo(() => {
     const categorySet = new Set<string>();
-    tasks.forEach((task) => {
+    tasks.forEach((task: any) => {
       if (task.category) {
         categorySet.add(task.category);
       }
@@ -49,8 +49,8 @@ export function TaskFilters({
   // Get task counts
   const counts = useMemo(() => {
     const all = tasks.length;
-    const active = tasks.filter((t) => !t.completed).length;
-    const completed = tasks.filter((t) => t.completed).length;
+    const active = tasks.filter((t: any) => !t.completed).length;
+    const completed = tasks.filter((t: any) => t.completed).length;
     return { all, active, completed };
   }, [tasks]);
 

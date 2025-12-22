@@ -350,7 +350,7 @@ describe('TaskItem Component', () => {
         />
       );
       // Use a more flexible matcher for multiline text
-      const description = screen.getByText((content, element) => {
+      const description = screen.getByText((_content, element) => {
         return element?.textContent === 'Line 1\nLine 2\nLine 3';
       });
       expect(description).toBeInTheDocument();

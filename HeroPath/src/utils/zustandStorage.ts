@@ -177,7 +177,7 @@ export function createZustandStorage(
  * Create a storage adapter with default HeroPath settings
  */
 export function createHeroPathStorage(
-  name: string,
+  _name: string,
   version: number = 1,
   migration?: StorageMigration
 ): StateStorage {

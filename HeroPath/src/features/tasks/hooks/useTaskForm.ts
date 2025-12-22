@@ -46,9 +46,9 @@ const MIN_TITLE_LENGTH = 3;
  * Custom hook for managing task form state and logic
  */
 export function useTaskForm(): UseTaskFormReturn {
-  const addTask = useTaskStore((s) => s.addTask);
-  const lastError = useTaskStore((s) => s.lastError);
-  const clearError = useTaskStore((s) => s.clearError);
+  const addTask = useTaskStore((s: any) => s.addTask);
+  const lastError = useTaskStore((s: any) => s.lastError);
+  const clearError = useTaskStore((s: any) => s.clearError);
 
   // Form state
   const [title, setTitle] = useState('');

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { DEFAULT_DIFFICULTY, getAllDifficulties } from './constants';
 
 export const taskDraftSchema = z.object({
   title: z
@@ -12,7 +13,10 @@ export const taskDraftSchema = z.object({
     .max(2000, 'Description is too long (max 2000 chars)')
     .optional()
     .or(z.literal('')),
-  difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
+  difficulty: z
+    .enum(getAllDifficulties() as [string, ...string[]])
+    .optional()
+    .default(DEFAULT_DIFFICULTY),
   category: z.string().trim().max(50, 'Category is too long (max 50 chars)').optional(),
   emotionalState: z
     .enum(['excited', 'calm', 'challenged', 'satisfied'])

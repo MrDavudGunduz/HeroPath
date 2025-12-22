@@ -5,6 +5,11 @@ import { taskDraftSchema } from './validation';
 import { useProgressStore } from '../../../store/useProgressStore';
 import { createHeroPathStorage } from '../../../utils/zustandStorage';
 import { createTaskStoreMigrations } from '../../../utils/migrations';
+import {
+  calculateXPValue,
+  DEFAULT_DIFFICULTY,
+  type TaskDifficulty,
+} from './constants';
 
 type TaskDraft = {
   title: string;
@@ -27,7 +32,7 @@ export interface TaskState {
   clearCompleted: () => void;
   clearError: () => void;
   getTasksByCategory: (category: string) => Task[];
-  getTasksByDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => Task[];
+  getTasksByDifficulty: (difficulty: TaskDifficulty) => Task[];
 }
 
 function makeId(): TaskId {
@@ -35,15 +40,6 @@ function makeId(): TaskId {
     return crypto.randomUUID();
   }
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
-}
-
-function calculateXPValue(difficulty: 'easy' | 'medium' | 'hard'): number {
-  const xpMap = {
-    easy: 10,
-    medium: 25,
-    hard: 50,
-  };
-  return xpMap[difficulty];
 }
 
 export const useTaskStore = create<TaskState>()(
@@ -61,7 +57,7 @@ export const useTaskStore = create<TaskState>()(
         }
 
         const now = Date.now();
-        const difficulty = parsed.data.difficulty ?? 'medium';
+        const difficulty = (parsed.data.difficulty ?? DEFAULT_DIFFICULTY) as TaskDifficulty;
         const xpValue = parsed.data.xpValue ?? calculateXPValue(difficulty);
 
         const task: Task = {

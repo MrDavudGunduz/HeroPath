@@ -2,9 +2,14 @@ import { useMemo } from 'react';
 import { Badge, Button } from '../../../components';
 import { useTaskStore } from '../model/store';
 import { cn } from '../../../utils/cn';
+import {
+  getAllDifficulties,
+  getDifficultyLabel,
+  type TaskDifficulty,
+} from '../model/constants';
 
 export type FilterType = 'all' | 'active' | 'completed' | 'category' | 'difficulty';
-export type DifficultyFilter = 'easy' | 'medium' | 'hard';
+export type DifficultyFilter = TaskDifficulty;
 
 export interface TaskFiltersProps {
   filter: FilterType;
@@ -132,42 +137,38 @@ export function TaskFilters({
             Filter by Difficulty
           </label>
           <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => onDifficultyChange('easy')}
-              className={cn(
-                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-                difficultyFilter === 'easy'
-                  ? 'bg-hero-success text-white'
-                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50',
-              )}
-            >
-              Easy (10 XP)
-            </button>
-            <button
-              type="button"
-              onClick={() => onDifficultyChange('medium')}
-              className={cn(
-                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-                difficultyFilter === 'medium'
-                  ? 'bg-hero-warning text-white'
-                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50',
-              )}
-            >
-              Medium (25 XP)
-            </button>
-            <button
-              type="button"
-              onClick={() => onDifficultyChange('hard')}
-              className={cn(
-                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-                difficultyFilter === 'hard'
-                  ? 'bg-hero-danger text-white'
-                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50',
-              )}
-            >
-              Hard (50 XP)
-            </button>
+            {getAllDifficulties().map((difficulty) => {
+              // Map difficulty to color variant for visual consistency
+              const getColorClass = (diff: TaskDifficulty, isActive: boolean) => {
+                if (!isActive) {
+                  return 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50';
+                }
+                switch (diff) {
+                  case 'easy':
+                    return 'bg-hero-success text-white';
+                  case 'medium':
+                    return 'bg-hero-warning text-white';
+                  case 'hard':
+                    return 'bg-hero-danger text-white';
+                  default:
+                    return 'bg-gray-800/50 text-gray-300';
+                }
+              };
+
+              return (
+                <button
+                  key={difficulty}
+                  type="button"
+                  onClick={() => onDifficultyChange(difficulty)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+                    getColorClass(difficulty, difficultyFilter === difficulty),
+                  )}
+                >
+                  {getDifficultyLabel(difficulty)}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}

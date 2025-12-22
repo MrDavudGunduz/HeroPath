@@ -1,19 +1,27 @@
-import { useMemo, useState } from 'react';
 import { Button, Card, Input, Textarea } from '../../../components';
-import { useTaskStore } from '../model/store';
 import { cn } from '../../../utils/cn';
+import { getAllDifficulties, getDifficultyLabel, type TaskDifficulty } from '../model/constants';
+import { useTaskForm } from '../hooks/useTaskForm';
 
+/**
+ * Task Form Component
+ * 
+ * UI-only component for task creation form.
+ * All form logic is handled by the useTaskForm hook.
+ */
 export function TaskForm() {
-  const addTask = useTaskStore((s) => s.addTask);
-  const lastError = useTaskStore((s) => s.lastError);
-  const clearError = useTaskStore((s) => s.clearError);
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
-  const [category, setCategory] = useState('');
-
-  const canSubmit = useMemo(() => title.trim().length >= 3, [title]);
+  const {
+    formState,
+    setTitle,
+    setDescription,
+    setDifficulty,
+    setCategory,
+    canSubmit,
+    lastError,
+    clearError,
+    handleFieldFocus,
+    handleSubmit,
+  } = useTaskForm();
 
   return (
     <Card
@@ -31,28 +39,13 @@ export function TaskForm() {
         ) : null
       }
     >
-      <form
-        className="space-y-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          addTask({ title, description, difficulty, category: category.trim() || undefined });
-          // If validation failed, store will set lastError and we keep inputs.
-          // If it succeeded, we clear local fields.
-          const ok = title.trim().length >= 3;
-          if (ok) {
-            setTitle('');
-            setDescription('');
-            setDifficulty('medium');
-            setCategory('');
-          }
-        }}
-      >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
           label="Title"
           placeholder="e.g. Finish onboarding flow"
-          value={title}
+          value={formState.title}
           onChange={(e) => setTitle(e.target.value)}
-          onFocus={() => lastError && clearError()}
+          onFocus={handleFieldFocus}
           fullWidth
           minLength={3}
           required
@@ -60,9 +53,9 @@ export function TaskForm() {
         <Textarea
           label="Description (optional)"
           placeholder="What does success look like?"
-          value={description}
+          value={formState.description}
           onChange={(e) => setDescription(e.target.value)}
-          onFocus={() => lastError && clearError()}
+          onFocus={handleFieldFocus}
           fullWidth
         />
 
@@ -77,17 +70,19 @@ export function TaskForm() {
             </label>
             <select
               id="difficulty"
-              value={difficulty}
-              onChange={(e) => setDifficulty(e.target.value as 'easy' | 'medium' | 'hard')}
+              value={formState.difficulty}
+              onChange={(e) => setDifficulty(e.target.value as TaskDifficulty)}
               className={cn(
                 'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200',
                 'bg-gray-800/50 text-white',
                 'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50',
               )}
             >
-              <option value="easy">Easy (10 XP)</option>
-              <option value="medium">Medium (25 XP)</option>
-              <option value="hard">Hard (50 XP)</option>
+              {getAllDifficulties().map((diff) => (
+                <option key={diff} value={diff}>
+                  {getDifficultyLabel(diff)}
+                </option>
+              ))}
             </select>
             <p className="mt-1 text-xs text-gray-400">
               XP value is calculated automatically based on difficulty
@@ -99,9 +94,9 @@ export function TaskForm() {
             <Input
               label="Category (optional)"
               placeholder="e.g. Work, Personal, Health"
-              value={category}
+              value={formState.category}
               onChange={(e) => setCategory(e.target.value)}
-              onFocus={() => lastError && clearError()}
+              onFocus={handleFieldFocus}
               fullWidth
               maxLength={50}
             />

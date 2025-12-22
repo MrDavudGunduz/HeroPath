@@ -47,11 +47,12 @@ function makeId(): TaskId {
 
 export const useTaskStore = create<TaskState>()(
   persist(
-    (set) => ({
-      tasks: [],
-      lastError: undefined,
+    (set: any) =>
+      ({
+        tasks: [] as Task[],
+        lastError: undefined as string | undefined,
 
-      addTask: (draft) => {
+        addTask: (draft) => {
         const parsed = taskDraftSchema.safeParse(draft);
         if (!parsed.success) {
           const message =
@@ -81,7 +82,7 @@ export const useTaskStore = create<TaskState>()(
           storyChapter: parsed.data.storyChapter?.trim() || undefined,
         };
 
-        set((state) => ({
+        set((state: TaskState) => ({
           tasks: [task, ...state.tasks],
           lastError: undefined,
         }));
@@ -89,8 +90,8 @@ export const useTaskStore = create<TaskState>()(
 
       toggleTask: (id) => {
         const now = Date.now();
-        set((state) => {
-          const task = state.tasks.find((t) => t.id === id);
+        set((state: TaskState) => {
+          const task = state.tasks.find((t: Task) => t.id === id);
           if (!task) return state;
 
           const wasCompleted = task.completed;
@@ -105,7 +106,7 @@ export const useTaskStore = create<TaskState>()(
           }
 
           return {
-            tasks: state.tasks.map((t) =>
+            tasks: state.tasks.map((t: Task) =>
               t.id === id
                 ? {
                     ...t,
@@ -119,11 +120,11 @@ export const useTaskStore = create<TaskState>()(
       },
 
       removeTask: (id) =>
-        set((state) => ({ tasks: state.tasks.filter((t) => t.id !== id) })),
+        set((state: TaskState) => ({ tasks: state.tasks.filter((t: Task) => t.id !== id) })),
 
       updateTask: (id, updates) => {
-        set((state) => {
-          const task = state.tasks.find((t) => t.id === id);
+        set((state: TaskState) => {
+          const task = state.tasks.find((t: Task) => t.id === id);
           if (!task) return state;
 
           // If difficulty is being updated, recalculate XP if not explicitly provided
@@ -133,7 +134,7 @@ export const useTaskStore = create<TaskState>()(
           }
 
           return {
-            tasks: state.tasks.map((t) =>
+            tasks: state.tasks.map((t: Task) =>
               t.id === id
                 ? {
                     ...t,
@@ -148,22 +149,22 @@ export const useTaskStore = create<TaskState>()(
       },
 
       clearCompleted: () =>
-        set((state) => ({ tasks: state.tasks.filter((t) => !t.completed) })),
+        set((state: TaskState) => ({ tasks: state.tasks.filter((t: Task) => !t.completed) })),
 
       clearError: () => set({ lastError: undefined }),
 
-      getTasksByCategory: (category) => {
+      getTasksByCategory: (category: string): Task[] => {
         const state = useTaskStore.getState();
         return state.tasks.filter(
-          (task) => task.category?.toLowerCase() === category.toLowerCase()
+          (task: Task) => task.category?.toLowerCase() === category.toLowerCase()
         );
       },
 
-      getTasksByDifficulty: (difficulty) => {
+      getTasksByDifficulty: (difficulty: TaskDifficulty): Task[] => {
         const state = useTaskStore.getState();
-        return state.tasks.filter((task) => task.difficulty === difficulty);
+        return state.tasks.filter((task: Task) => task.difficulty === difficulty);
       },
-    }),
+      } as TaskState),
     {
       name: 'tasks.v1',
       version: 1,
@@ -171,7 +172,7 @@ export const useTaskStore = create<TaskState>()(
         'tasks.v1',
         1,
         createTaskStoreMigrations()
-      ),
+      ) as any,
     }
   )
 );

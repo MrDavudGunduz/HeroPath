@@ -7,7 +7,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { quotaManager } from '../utils/persistence';
-import { storage, StorageError } from '../utils/storage';
+import type { StorageError } from '../utils/storage';
 
 export interface StorageHealth {
   /** Current storage usage in bytes */

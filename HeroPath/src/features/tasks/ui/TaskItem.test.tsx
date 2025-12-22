@@ -108,7 +108,7 @@ describe('TaskItem Component', () => {
         completed: true,
         completedAt: Date.now(),
       };
-      const { container } = render(
+      render(
         <TaskItem
           task={completedTask}
           onToggle={mockOnToggle}

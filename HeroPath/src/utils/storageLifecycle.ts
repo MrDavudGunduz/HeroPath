@@ -12,11 +12,8 @@
 export function setupStorageLifecycle(): void {
   // Flush pending writes before page unload
   window.addEventListener('beforeunload', () => {
-    // Give a small delay to allow debounced writes to complete
     // Note: In a production app, you might want to track all
     // debounced storage instances and flush them explicitly
-    const flushDelay = 100; // ms
-    
     // Use synchronous storage operations if possible
     // This is a best-effort approach since we can't reliably
     // wait for async operations in beforeunload

@@ -1,6 +1,6 @@
 /**
  * LocalStorage Service
- * 
+ *
  * A type-safe wrapper around localStorage with error handling,
  * migration support, and data persistence strategies.
  */
@@ -70,7 +70,8 @@ export const storage = {
       const storageError = err as unknown as DOMException | Error;
 
       if (
-        (storageError instanceof DOMException && storageError.name === 'QuotaExceededError') ||
+        (storageError instanceof DOMException &&
+          storageError.name === 'QuotaExceededError') ||
         (storageError instanceof DOMException && storageError.code === 22)
       ) {
         const storageErr: StorageError = {
@@ -228,14 +229,20 @@ export class StorageMigration {
 
     // Apply migrations in order
     for (const migration of this.migrations) {
-      if (migration.version > storedVersion && migration.version <= this.currentVersion) {
+      if (
+        migration.version > storedVersion &&
+        migration.version <= this.currentVersion
+      ) {
         try {
           migratedData = migration.migrate(migratedData);
           console.log(
-            `Migrated ${key} from version ${storedVersion} to ${migration.version}`,
+            `Migrated ${key} from version ${storedVersion} to ${migration.version}`
           );
         } catch (error) {
-          console.error(`Migration failed for ${key} to version ${migration.version}:`, error);
+          console.error(
+            `Migration failed for ${key} to version ${migration.version}:`,
+            error
+          );
           throw error;
         }
       }
@@ -281,7 +288,7 @@ export class StorageMigration {
 export function createVersionedStorage<T>(
   key: string,
   currentVersion: number,
-  migration?: StorageMigration,
+  migration?: StorageMigration
 ): {
   get: () => T | null;
   set: (value: T) => void;
@@ -301,7 +308,10 @@ export function createVersionedStorage<T>(
             storage.set(key, migrated);
             return migrated as T;
           } catch (error) {
-            console.error(`Migration failed for ${key}, using fallback:`, error);
+            console.error(
+              `Migration failed for ${key}, using fallback:`,
+              error
+            );
             return null;
           }
         }

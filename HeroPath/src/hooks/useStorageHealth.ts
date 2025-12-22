@@ -1,6 +1,6 @@
 /**
  * Storage Health Hook
- * 
+ *
  * Provides utilities to monitor and manage localStorage health,
  * including quota monitoring, error handling, and cleanup.
  */
@@ -33,7 +33,7 @@ export function useStorageHealth() {
   const [health, setHealth] = useState<StorageHealth>(() => {
     const usage = quotaManager.getUsage();
     const quota = quotaManager.checkQuota();
-    
+
     return {
       current: usage.current,
       max: usage.max,
@@ -49,7 +49,7 @@ export function useStorageHealth() {
     try {
       const usage = quotaManager.getUsage();
       const quota = quotaManager.checkQuota();
-      
+
       setHealth((prev) => ({
         ...prev,
         current: usage.current,
@@ -71,21 +71,24 @@ export function useStorageHealth() {
     }
   }, []);
 
-  const cleanup = useCallback((keysToPreserve: string[] = []) => {
-    try {
-      const cleaned = quotaManager.cleanup(keysToPreserve);
-      refresh();
-      return cleaned;
-    } catch (error) {
-      const storageError: StorageError = {
-        code: 'UNKNOWN',
-        message: error instanceof Error ? error.message : 'Cleanup failed',
-        originalError: error,
-      };
-      setHealth((prev) => ({ ...prev, lastError: storageError }));
-      return 0;
-    }
-  }, [refresh]);
+  const cleanup = useCallback(
+    (keysToPreserve: string[] = []) => {
+      try {
+        const cleaned = quotaManager.cleanup(keysToPreserve);
+        refresh();
+        return cleaned;
+      } catch (error) {
+        const storageError: StorageError = {
+          code: 'UNKNOWN',
+          message: error instanceof Error ? error.message : 'Cleanup failed',
+          originalError: error,
+        };
+        setHealth((prev) => ({ ...prev, lastError: storageError }));
+        return 0;
+      }
+    },
+    [refresh]
+  );
 
   // Refresh on mount
   useEffect(() => {
@@ -103,7 +106,7 @@ export function useStorageHealth() {
  * Hook to handle storage errors globally
  */
 export function useStorageErrorHandler(
-  onError?: (error: StorageError) => void,
+  onError?: (error: StorageError) => void
 ) {
   useEffect(() => {
     const handleStorageError = (event: StorageEvent) => {
@@ -120,4 +123,3 @@ export function useStorageErrorHandler(
     };
   }, [onError]);
 }
-

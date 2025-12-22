@@ -27,7 +27,7 @@ export interface HeaderProps {
 
 /**
  * Header/Navbar Component
- * 
+ *
  * Application header with navigation, user info, and actions.
  * Displays hero character avatar and level for gamification.
  */
@@ -43,7 +43,7 @@ const Header: FC<HeaderProps> = ({
     <header
       className={cn(
         'bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 border-b border-purple-500/30 backdrop-blur-lg',
-        className,
+        className
       )}
     >
       <div className="container mx-auto px-4 py-4">
@@ -75,13 +75,19 @@ const Header: FC<HeaderProps> = ({
 
           {/* User Info and Actions */}
           <div className="flex items-center space-x-4">
-            {actions && <div className="flex items-center space-x-2">{actions}</div>}
+            {actions && (
+              <div className="flex items-center space-x-2">{actions}</div>
+            )}
             {(userLevel !== undefined || userAvatar || userName) && (
               <div className="flex items-center space-x-3">
                 {userLevel !== undefined && (
                   <div className="text-right hidden sm:block">
-                    <div className="text-xs text-white/60 uppercase tracking-wider">Level</div>
-                    <div className="text-2xl font-bold text-glow">{userLevel}</div>
+                    <div className="text-xs text-white/60 uppercase tracking-wider">
+                      Level
+                    </div>
+                    <div className="text-2xl font-bold text-glow">
+                      {userLevel}
+                    </div>
                   </div>
                 )}
                 <Avatar

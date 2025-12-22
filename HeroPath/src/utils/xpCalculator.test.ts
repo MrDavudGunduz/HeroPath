@@ -33,7 +33,7 @@ describe('XP Calculator', () => {
 
     it('should throw error for invalid difficulty', () => {
       expect(() => calculateXPValue('invalid' as TaskDifficulty)).toThrow(
-        'Invalid difficulty level: invalid',
+        'Invalid difficulty level: invalid'
       );
     });
   });
@@ -81,8 +81,12 @@ describe('XP Calculator', () => {
     });
 
     it('should throw error for level less than 1', () => {
-      expect(() => calculateXPToNextLevel(0)).toThrow('Level must be at least 1');
-      expect(() => calculateXPToNextLevel(-1)).toThrow('Level must be at least 1');
+      expect(() => calculateXPToNextLevel(0)).toThrow(
+        'Level must be at least 1'
+      );
+      expect(() => calculateXPToNextLevel(-1)).toThrow(
+        'Level must be at least 1'
+      );
     });
   });
 
@@ -115,8 +119,12 @@ describe('XP Calculator', () => {
     });
 
     it('should throw error for level less than 1', () => {
-      expect(() => calculateTotalXPForLevel(0)).toThrow('Target level must be at least 1');
-      expect(() => calculateTotalXPForLevel(-1)).toThrow('Target level must be at least 1');
+      expect(() => calculateTotalXPForLevel(0)).toThrow(
+        'Target level must be at least 1'
+      );
+      expect(() => calculateTotalXPForLevel(-1)).toThrow(
+        'Target level must be at least 1'
+      );
     });
   });
 
@@ -159,7 +167,9 @@ describe('XP Calculator', () => {
     });
 
     it('should throw error for negative XP', () => {
-      expect(() => calculateLevelFromXP(-1)).toThrow('Total XP cannot be negative');
+      expect(() => calculateLevelFromXP(-1)).toThrow(
+        'Total XP cannot be negative'
+      );
     });
   });
 
@@ -190,11 +200,15 @@ describe('XP Calculator', () => {
     });
 
     it('should throw error for negative XP', () => {
-      expect(() => calculateCurrentLevelXP(-1, 1)).toThrow('Total XP cannot be negative');
+      expect(() => calculateCurrentLevelXP(-1, 1)).toThrow(
+        'Total XP cannot be negative'
+      );
     });
 
     it('should throw error for invalid level', () => {
-      expect(() => calculateCurrentLevelXP(100, 0)).toThrow('Current level must be at least 1');
+      expect(() => calculateCurrentLevelXP(100, 0)).toThrow(
+        'Current level must be at least 1'
+      );
     });
   });
 
@@ -266,7 +280,9 @@ describe('XP Calculator', () => {
       // Level 2, 100 XP (just reached level 2), need 150 XP to level up
       // 150 / 25 = 6 tasks
       const totalXPForLevel2 = calculateTotalXPForLevel(2);
-      expect(calculateTasksNeededToLevelUp(totalXPForLevel2, 2, 'medium')).toBe(6);
+      expect(calculateTasksNeededToLevelUp(totalXPForLevel2, 2, 'medium')).toBe(
+        6
+      );
     });
 
     it('should handle partial progress in level', () => {

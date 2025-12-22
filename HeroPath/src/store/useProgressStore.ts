@@ -126,7 +126,7 @@ export const useProgressStore = create<ProgressState>()(
 
       completeTask: (xpValue, category) => {
         const state = get();
-        
+
         // Map category to skill tree category if applicable
         const skillCategoryMap: Record<string, keyof SkillTree> = {
           productivity: 'productivity',
@@ -135,11 +135,13 @@ export const useProgressStore = create<ProgressState>()(
           learning: 'learning',
           social: 'social',
         };
-        
-        const skillCategory = category ? skillCategoryMap[category.toLowerCase()] : undefined;
-        
+
+        const skillCategory = category
+          ? skillCategoryMap[category.toLowerCase()]
+          : undefined;
+
         state.addXP(xpValue, skillCategory);
-        
+
         set((prevState) => ({
           progress: {
             ...prevState.progress,
@@ -188,7 +190,10 @@ export const useProgressStore = create<ProgressState>()(
               ...state.progress,
               heroCharacter: {
                 ...state.progress.heroCharacter,
-                unlockedOutfits: [...state.progress.heroCharacter.unlockedOutfits, outfit],
+                unlockedOutfits: [
+                  ...state.progress.heroCharacter.unlockedOutfits,
+                  outfit,
+                ],
               },
             },
           };
@@ -218,7 +223,10 @@ export const useProgressStore = create<ProgressState>()(
             ...state.progress,
             skillTree: {
               ...state.progress.skillTree,
-              [category]: Math.max(0, state.progress.skillTree[category] + amount),
+              [category]: Math.max(
+                0,
+                state.progress.skillTree[category] + amount
+              ),
             },
           },
         }));
@@ -227,7 +235,11 @@ export const useProgressStore = create<ProgressState>()(
     {
       name: 'progress.v1',
       version: 1,
-      storage: createHeroPathStorage('progress.v1', 1, createProgressStoreMigrations()),
-    },
-  ),
+      storage: createHeroPathStorage(
+        'progress.v1',
+        1,
+        createProgressStoreMigrations()
+      ),
+    }
+  )
 );

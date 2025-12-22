@@ -23,7 +23,7 @@ export interface AvatarProps {
 
 /**
  * Avatar/Character Component
- * 
+ *
  * An avatar component for displaying user characters or profile images.
  * Supports hero progression with level badges.
  */
@@ -44,20 +44,26 @@ const Avatar: React.FC<AvatarProps> = ({
     xl: 'w-24 h-24 text-xl',
   };
 
-  const baseClasses = 'inline-flex items-center justify-center rounded-full bg-hero-primary text-white font-semibold overflow-hidden border-2 border-white shadow-md';
+  const baseClasses =
+    'inline-flex items-center justify-center rounded-full bg-hero-primary text-white font-semibold overflow-hidden border-2 border-white shadow-md';
 
   // Generate initials from alt text if not provided
-  const displayInitials = initials || (alt ? alt.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '?');
+  const displayInitials =
+    initials ||
+    (alt
+      ? alt
+          .split(' ')
+          .map((n) => n[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2)
+      : '?');
 
   return (
     <div className="relative inline-block">
       <div className={cn(baseClasses, sizeClasses[size], className)}>
         {src ? (
-          <img
-            src={src}
-            alt={alt}
-            className="w-full h-full object-cover"
-          />
+          <img src={src} alt={alt} className="w-full h-full object-cover" />
         ) : (
           <span>{displayInitials}</span>
         )}

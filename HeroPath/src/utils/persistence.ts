@@ -1,6 +1,6 @@
 /**
  * Data Persistence Strategy
- * 
+ *
  * Provides utilities for managing data persistence with Zustand stores,
  * including debouncing, error handling, and migration support.
  */
@@ -25,7 +25,7 @@ export interface PersistenceConfig<T> {
  * This is a simplified version that works with the standard localStorage wrapper.
  */
 export function createPersistenceConfig<T>(
-  config: PersistenceConfig<T>,
+  config: PersistenceConfig<T>
 ): Partial<PersistOptions<T>> {
   const { name, version, partialize } = config;
 
@@ -33,7 +33,7 @@ export function createPersistenceConfig<T>(
   // This config is for reference and can be used with custom storage implementations.
   // For standard Zustand persist, use the built-in storage option directly.
   // Migrations can be handled via the storage wrapper's migration system.
-  
+
   return {
     name,
     version,

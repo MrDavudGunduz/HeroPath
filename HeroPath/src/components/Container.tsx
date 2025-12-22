@@ -17,7 +17,7 @@ export interface ContainerProps {
 
 /**
  * Container Component
- * 
+ *
  * A layout component that provides consistent max-width and padding.
  * Used for centering content and maintaining readable line lengths.
  */
@@ -44,7 +44,14 @@ const Container: React.FC<ContainerProps> = ({
   };
 
   return (
-    <div className={cn('mx-auto', maxWidthClasses[maxWidth], paddingClasses[padding], className)}>
+    <div
+      className={cn(
+        'mx-auto',
+        maxWidthClasses[maxWidth],
+        paddingClasses[padding],
+        className
+      )}
+    >
       {children}
     </div>
   );

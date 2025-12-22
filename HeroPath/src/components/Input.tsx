@@ -21,7 +21,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 /**
  * Input Component
- * 
+ *
  * A styled input component with label, error handling, and icon support.
  */
 const Input: React.FC<InputProps> = ({
@@ -39,11 +39,15 @@ const Input: React.FC<InputProps> = ({
   const inputId = id ?? `input-${reactId}`;
   const errorId = error ? `${inputId}-error` : undefined;
   const helperId = helperText && !error ? `${inputId}-help` : undefined;
-  const describedBy = [errorId, helperId].filter(Boolean).join(' ') || undefined;
-  
-  const baseInputClasses = 'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 bg-gray-800/50 text-white placeholder-gray-400';
-  const normalInputClasses = 'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50';
-  const errorInputClasses = 'border-hero-danger focus:border-hero-danger focus:ring-hero-danger focus:shadow-glow-danger/50';
+  const describedBy =
+    [errorId, helperId].filter(Boolean).join(' ') || undefined;
+
+  const baseInputClasses =
+    'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 bg-gray-800/50 text-white placeholder-gray-400';
+  const normalInputClasses =
+    'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50';
+  const errorInputClasses =
+    'border-hero-danger focus:border-hero-danger focus:ring-hero-danger focus:shadow-glow-danger/50';
   const widthClasses = fullWidth ? 'w-full' : '';
 
   return (
@@ -69,7 +73,7 @@ const Input: React.FC<InputProps> = ({
             error ? errorInputClasses : normalInputClasses,
             leftIcon && 'pl-10',
             rightIcon && 'pr-10',
-            className,
+            className
           )}
           aria-invalid={Boolean(error) || undefined}
           aria-describedby={describedBy}

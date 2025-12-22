@@ -8,7 +8,12 @@ import {
   type TaskDifficulty,
 } from '../model/constants';
 
-export type FilterType = 'all' | 'active' | 'completed' | 'category' | 'difficulty';
+export type FilterType =
+  | 'all'
+  | 'active'
+  | 'completed'
+  | 'category'
+  | 'difficulty';
 export type DifficultyFilter = TaskDifficulty;
 
 export interface TaskFiltersProps {
@@ -58,21 +63,30 @@ export function TaskFilters({
           size="sm"
           onClick={() => onFilterChange('all')}
         >
-          All <Badge variant="primary" size="sm" className="ml-2">{counts.all}</Badge>
+          All{' '}
+          <Badge variant="primary" size="sm" className="ml-2">
+            {counts.all}
+          </Badge>
         </Button>
         <Button
           variant={filter === 'active' ? 'primary' : 'secondary'}
           size="sm"
           onClick={() => onFilterChange('active')}
         >
-          Active <Badge variant="warning" size="sm" className="ml-2">{counts.active}</Badge>
+          Active{' '}
+          <Badge variant="warning" size="sm" className="ml-2">
+            {counts.active}
+          </Badge>
         </Button>
         <Button
           variant={filter === 'completed' ? 'primary' : 'secondary'}
           size="sm"
           onClick={() => onFilterChange('completed')}
         >
-          Completed <Badge variant="success" size="sm" className="ml-2">{counts.completed}</Badge>
+          Completed{' '}
+          <Badge variant="success" size="sm" className="ml-2">
+            {counts.completed}
+          </Badge>
         </Button>
         {categories.length > 0 && (
           <Button
@@ -106,7 +120,7 @@ export function TaskFilters({
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 !categoryFilter
                   ? 'bg-hero-primary text-white'
-                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50',
+                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
               )}
             >
               All Categories
@@ -120,7 +134,7 @@ export function TaskFilters({
                   'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                   categoryFilter === cat
                     ? 'bg-hero-primary text-white'
-                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50',
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
                 )}
               >
                 {cat}
@@ -139,7 +153,10 @@ export function TaskFilters({
           <div className="flex flex-wrap gap-2">
             {getAllDifficulties().map((difficulty) => {
               // Map difficulty to color variant for visual consistency
-              const getColorClass = (diff: TaskDifficulty, isActive: boolean) => {
+              const getColorClass = (
+                diff: TaskDifficulty,
+                isActive: boolean
+              ) => {
                 if (!isActive) {
                   return 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50';
                 }
@@ -162,7 +179,7 @@ export function TaskFilters({
                   onClick={() => onDifficultyChange(difficulty)}
                   className={cn(
                     'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-                    getColorClass(difficulty, difficultyFilter === difficulty),
+                    getColorClass(difficulty, difficultyFilter === difficulty)
                   )}
                 >
                   {getDifficultyLabel(difficulty)}
@@ -175,4 +192,3 @@ export function TaskFilters({
     </div>
   );
 }
-

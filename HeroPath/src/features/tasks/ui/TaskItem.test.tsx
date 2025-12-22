@@ -25,16 +25,26 @@ describe('TaskItem Component', () => {
   describe('Rendering', () => {
     it('should render task title', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
       expect(screen.getByText('Test Task')).toBeInTheDocument();
     });
 
     it('should render task description when provided', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
-      expect(screen.getByText('This is a test task description')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a test task description')
+      ).toBeInTheDocument();
     });
 
     it('should not render description when not provided', () => {
@@ -47,14 +57,20 @@ describe('TaskItem Component', () => {
           task={taskWithoutDescription}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
-      expect(screen.queryByText('This is a test task description')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('This is a test task description')
+      ).not.toBeInTheDocument();
     });
 
     it('should render as list item', () => {
       const { container } = render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
       const listItem = container.querySelector('li');
       expect(listItem).toBeInTheDocument();
@@ -64,7 +80,11 @@ describe('TaskItem Component', () => {
   describe('Task Status', () => {
     it('should show "Active" badge for incomplete task', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
       expect(screen.getByText('Active')).toBeInTheDocument();
     });
@@ -80,7 +100,7 @@ describe('TaskItem Component', () => {
           task={completedTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       expect(screen.getByText('Completed')).toBeInTheDocument();
     });
@@ -96,7 +116,7 @@ describe('TaskItem Component', () => {
           task={completedTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       const listItem = container.querySelector('li');
       expect(listItem?.className).toContain('opacity-75');
@@ -113,7 +133,7 @@ describe('TaskItem Component', () => {
           task={completedTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       const title = screen.getByText('Test Task');
       expect(title.className).toContain('line-through');
@@ -130,15 +150,21 @@ describe('TaskItem Component', () => {
           task={completedTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
-      const checkbox = screen.getByRole('button', { name: 'Mark as incomplete' });
+      const checkbox = screen.getByRole('button', {
+        name: 'Mark as incomplete',
+      });
       expect(checkbox).toHaveTextContent('✓');
     });
 
     it('should not show checkmark in checkbox for incomplete task', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
       const checkbox = screen.getByRole('button', { name: 'Mark as complete' });
       expect(checkbox).not.toHaveTextContent('✓');
@@ -149,7 +175,11 @@ describe('TaskItem Component', () => {
     it('should call onToggle when checkbox is clicked', async () => {
       const user = userEvent.setup();
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
 
       const checkbox = screen.getByRole('button', { name: 'Mark as complete' });
@@ -162,7 +192,11 @@ describe('TaskItem Component', () => {
     it('should call onToggle when Toggle button is clicked', async () => {
       const user = userEvent.setup();
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
 
       const toggleButton = screen.getByRole('button', { name: 'Toggle' });
@@ -175,7 +209,11 @@ describe('TaskItem Component', () => {
     it('should call onRemove when Remove button is clicked', async () => {
       const user = userEvent.setup();
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
 
       const removeButton = screen.getByRole('button', { name: 'Remove' });
@@ -188,7 +226,11 @@ describe('TaskItem Component', () => {
     it('should not call onToggle when Remove button is clicked', async () => {
       const user = userEvent.setup();
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
 
       const removeButton = screen.getByRole('button', { name: 'Remove' });
@@ -201,7 +243,11 @@ describe('TaskItem Component', () => {
   describe('Accessibility', () => {
     it('should have proper aria-label for incomplete task checkbox', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
       const checkbox = screen.getByRole('button', { name: 'Mark as complete' });
       expect(checkbox).toBeInTheDocument();
@@ -218,18 +264,28 @@ describe('TaskItem Component', () => {
           task={completedTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
-      const checkbox = screen.getByRole('button', { name: 'Mark as incomplete' });
+      const checkbox = screen.getByRole('button', {
+        name: 'Mark as incomplete',
+      });
       expect(checkbox).toBeInTheDocument();
     });
 
     it('should have accessible button labels', () => {
       render(
-        <TaskItem task={mockTask} onToggle={mockOnToggle} onRemove={mockOnRemove} />,
+        <TaskItem
+          task={mockTask}
+          onToggle={mockOnToggle}
+          onRemove={mockOnRemove}
+        />
       );
-      expect(screen.getByRole('button', { name: 'Toggle' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Remove' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Toggle' })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Remove' })
+      ).toBeInTheDocument();
     });
   });
 
@@ -244,7 +300,7 @@ describe('TaskItem Component', () => {
           task={longTitleTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       expect(screen.getByText('A'.repeat(200))).toBeInTheDocument();
     });
@@ -259,7 +315,7 @@ describe('TaskItem Component', () => {
           task={longDescriptionTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       expect(screen.getByText('B'.repeat(1000))).toBeInTheDocument();
     });
@@ -274,9 +330,11 @@ describe('TaskItem Component', () => {
           task={specialCharTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
-      expect(screen.getByText('Task with <special> & "characters"')).toBeInTheDocument();
+      expect(
+        screen.getByText('Task with <special> & "characters"')
+      ).toBeInTheDocument();
     });
 
     it('should handle task with multiline description', () => {
@@ -289,7 +347,7 @@ describe('TaskItem Component', () => {
           task={multilineTask}
           onToggle={mockOnToggle}
           onRemove={mockOnRemove}
-        />,
+        />
       );
       // Use a more flexible matcher for multiline text
       const description = screen.getByText((content, element) => {

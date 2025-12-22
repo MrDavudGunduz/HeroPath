@@ -1,6 +1,6 @@
 /**
  * Custom Hook for Task Form Management
- * 
+ *
  * Separates form logic from UI, making the component more maintainable.
  * Handles form state, validation, submission, and error management.
  */
@@ -19,22 +19,22 @@ export interface TaskFormState {
 export interface UseTaskFormReturn {
   // Form state
   formState: TaskFormState;
-  
+
   // Setters
   setTitle: (value: string) => void;
   setDescription: (value: string) => void;
   setDifficulty: (value: TaskDifficulty) => void;
   setCategory: (value: string) => void;
-  
+
   // Validation
   canSubmit: boolean;
   isTitleValid: boolean;
-  
+
   // Error handling
   lastError: string | undefined;
   clearError: () => void;
   handleFieldFocus: () => void;
-  
+
   // Form actions
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   resetForm: () => void;
@@ -53,7 +53,8 @@ export function useTaskForm(): UseTaskFormReturn {
   // Form state
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [difficulty, setDifficulty] = useState<TaskDifficulty>(DEFAULT_DIFFICULTY);
+  const [difficulty, setDifficulty] =
+    useState<TaskDifficulty>(DEFAULT_DIFFICULTY);
   const [category, setCategory] = useState('');
 
   // Validation
@@ -99,7 +100,7 @@ export function useTaskForm(): UseTaskFormReturn {
         resetForm();
       }
     },
-    [title, description, difficulty, category, addTask, isTitleValid, resetForm],
+    [title, description, difficulty, category, addTask, isTitleValid, resetForm]
   );
 
   return {
@@ -122,4 +123,3 @@ export function useTaskForm(): UseTaskFormReturn {
     resetForm,
   };
 }
-

@@ -1,6 +1,6 @@
 /**
  * Zustand Persist Storage Adapter
- * 
+ *
  * Custom storage adapter for Zustand persist middleware with:
  * - Error handling (quota exceeded, etc.)
  * - Debounced saves (for performance)
@@ -35,7 +35,7 @@ export interface StorageAdapterOptions {
  * Create a Zustand-compatible storage adapter with error handling and debouncing
  */
 export function createZustandStorage(
-  options: StorageAdapterOptions = {},
+  options: StorageAdapterOptions = {}
 ): StateStorage {
   const {
     prefix = 'heropath.',
@@ -47,7 +47,9 @@ export function createZustandStorage(
   } = options;
 
   // Create debounced storage instance if enabled
-  const debouncedStorage = debounce ? new DebouncedStorage(debounceDelay) : null;
+  const debouncedStorage = debounce
+    ? new DebouncedStorage(debounceDelay)
+    : null;
 
   /**
    * Get full storage key
@@ -57,7 +59,11 @@ export function createZustandStorage(
   /**
    * Handle storage errors
    */
-  const handleError = (error: unknown, operation: string, key: string): void => {
+  const handleError = (
+    error: unknown,
+    operation: string,
+    key: string
+  ): void => {
     let storageError: StorageError;
 
     if (error instanceof DOMException) {
@@ -85,7 +91,7 @@ export function createZustandStorage(
     }
 
     console.error(`Storage ${operation} error:`, storageError);
-    
+
     if (onError) {
       onError(storageError);
     }
@@ -154,7 +160,7 @@ export function createZustandStorage(
       try {
         const key = getKey(name);
         storage.remove(key);
-        
+
         // Also remove version key if migration is enabled
         if (migration) {
           const versionKey = `${key}.version`;
@@ -173,7 +179,7 @@ export function createZustandStorage(
 export function createHeroPathStorage(
   name: string,
   version: number = 1,
-  migration?: StorageMigration,
+  migration?: StorageMigration
 ): StateStorage {
   return createZustandStorage({
     prefix: 'heropath.',
@@ -205,4 +211,3 @@ export function flushPendingWrites(): void {
     // a more sophisticated solution
   });
 }
-

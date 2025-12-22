@@ -1,6 +1,6 @@
 /**
  * Storage Lifecycle Management
- * 
+ *
  * Handles storage lifecycle events like page unload,
  * ensuring pending writes are flushed before the page closes.
  */
@@ -95,4 +95,3 @@ export async function getStorageQuota(): Promise<{
   }
   return null;
 }
-

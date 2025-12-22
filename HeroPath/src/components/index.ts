@@ -1,6 +1,6 @@
 /**
  * Component Library Index
- * 
+ *
  * Central export point for all reusable UI components.
  * This allows for cleaner imports throughout the application.
  */

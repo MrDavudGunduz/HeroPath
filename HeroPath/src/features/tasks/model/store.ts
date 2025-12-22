@@ -36,7 +36,10 @@ export interface TaskState {
 }
 
 function makeId(): TaskId {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+  if (
+    typeof crypto !== 'undefined' &&
+    typeof crypto.randomUUID === 'function'
+  ) {
     return crypto.randomUUID();
   }
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
@@ -51,13 +54,15 @@ export const useTaskStore = create<TaskState>()(
       addTask: (draft) => {
         const parsed = taskDraftSchema.safeParse(draft);
         if (!parsed.success) {
-          const message = parsed.error.issues[0]?.message ?? 'Invalid task input';
+          const message =
+            parsed.error.issues[0]?.message ?? 'Invalid task input';
           set({ lastError: message });
           return;
         }
 
         const now = Date.now();
-        const difficulty = (parsed.data.difficulty ?? DEFAULT_DIFFICULTY) as TaskDifficulty;
+        const difficulty = (parsed.data.difficulty ??
+          DEFAULT_DIFFICULTY) as TaskDifficulty;
         const xpValue = parsed.data.xpValue ?? calculateXPValue(difficulty);
 
         const task: Task = {
@@ -76,7 +81,10 @@ export const useTaskStore = create<TaskState>()(
           storyChapter: parsed.data.storyChapter?.trim() || undefined,
         };
 
-        set((state) => ({ tasks: [task, ...state.tasks], lastError: undefined }));
+        set((state) => ({
+          tasks: [task, ...state.tasks],
+          lastError: undefined,
+        }));
       },
 
       toggleTask: (id) => {
@@ -90,7 +98,8 @@ export const useTaskStore = create<TaskState>()(
 
           // If task is being completed, add XP to progress
           if (isNowCompleted) {
-            const { completeTask, incrementStreak } = useProgressStore.getState();
+            const { completeTask, incrementStreak } =
+              useProgressStore.getState();
             completeTask(task.xpValue, task.category);
             incrementStreak();
           }
@@ -103,7 +112,7 @@ export const useTaskStore = create<TaskState>()(
                     completed: isNowCompleted,
                     completedAt: isNowCompleted ? now : undefined,
                   }
-                : t,
+                : t
             ),
           };
         });
@@ -131,7 +140,7 @@ export const useTaskStore = create<TaskState>()(
                     ...updates,
                     ...(updatedXP !== undefined && { xpValue: updatedXP }),
                   }
-                : t,
+                : t
             ),
             lastError: undefined,
           };
@@ -146,7 +155,7 @@ export const useTaskStore = create<TaskState>()(
       getTasksByCategory: (category) => {
         const state = useTaskStore.getState();
         return state.tasks.filter(
-          (task) => task.category?.toLowerCase() === category.toLowerCase(),
+          (task) => task.category?.toLowerCase() === category.toLowerCase()
         );
       },
 
@@ -158,9 +167,11 @@ export const useTaskStore = create<TaskState>()(
     {
       name: 'tasks.v1',
       version: 1,
-      storage: createHeroPathStorage('tasks.v1', 1, createTaskStoreMigrations()),
-    },
-  ),
+      storage: createHeroPathStorage(
+        'tasks.v1',
+        1,
+        createTaskStoreMigrations()
+      ),
+    }
+  )
 );
-
-

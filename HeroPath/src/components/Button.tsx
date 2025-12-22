@@ -23,7 +23,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 /**
  * Button Component
- * 
+ *
  * A versatile button component with multiple variants and sizes.
  * Supports loading states, icons, and full-width option.
  */
@@ -40,22 +40,26 @@ const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   // Base button classes
-  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden';
-  
+  const baseClasses =
+    'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden';
+
   // Variant classes with gaming style
   const variantClasses = {
-    primary: 'bg-gradient-primary text-white hover:shadow-glow-primary focus:ring-hero-primary shadow-glow-button hover:scale-105 active:scale-95',
-    secondary: 'bg-gradient-to-r from-gray-700 to-gray-600 text-white hover:from-gray-600 hover:to-gray-500 focus:ring-gray-400 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95',
-    ghost: 'bg-transparent text-hero-primary border-2 border-hero-primary/50 hover:border-hero-primary hover:bg-hero-primary/10 focus:ring-hero-primary hover:scale-105 active:scale-95',
+    primary:
+      'bg-gradient-primary text-white hover:shadow-glow-primary focus:ring-hero-primary shadow-glow-button hover:scale-105 active:scale-95',
+    secondary:
+      'bg-gradient-to-r from-gray-700 to-gray-600 text-white hover:from-gray-600 hover:to-gray-500 focus:ring-gray-400 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95',
+    ghost:
+      'bg-transparent text-hero-primary border-2 border-hero-primary/50 hover:border-hero-primary hover:bg-hero-primary/10 focus:ring-hero-primary hover:scale-105 active:scale-95',
   };
-  
+
   // Size classes
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-base',
     lg: 'px-6 py-3 text-lg',
   };
-  
+
   // Width classes
   const widthClasses = fullWidth ? 'w-full' : '';
 
@@ -66,7 +70,7 @@ const Button: FC<ButtonProps> = ({
         variantClasses[variant],
         sizeClasses[size],
         widthClasses,
-        className,
+        className
       )}
       disabled={disabled || loading}
       aria-busy={loading || undefined}

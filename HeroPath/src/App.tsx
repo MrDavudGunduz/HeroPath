@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Header, Container, Card, Button, Badge, ProgressBar, Input, Textarea, Modal } from './components';
+import { Header, Container, ProgressBar, Badge } from './components';
+import { TaskForm, TaskList } from './features/tasks';
+import { useProgressStore } from './store/useProgressStore';
 
 /**
  * Main Application Component
@@ -7,14 +8,18 @@ import { Header, Container, Card, Button, Badge, ProgressBar, Input, Textarea, M
  * This is the root component of the HeroPath application.
  * It provides the main layout structure with header, main content area, and footer.
  * 
- * Future features will be integrated into this component:
- * - Task management module
+ * Features integrated:
+ * - Task management module (TaskForm + TaskList)
  * - Gamification system (XP, levels, progress)
- * - Narrative journey system
- * - User progress dashboard
+ * - Progress visualization
  */
 const App = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const progress = useProgressStore((s) => s.progress);
+
+  // Calculate XP progress percentage
+  const xpProgress = progress.xpToNextLevel > 0 
+    ? Math.round((progress.currentXP / progress.xpToNextLevel) * 100)
+    : 0;
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -27,7 +32,7 @@ const App = () => {
 
       {/* Application Header */}
       <Header
-        userLevel={5}
+        userLevel={progress.level}
         userName="Hero"
         navItems={[
           { label: 'Dashboard', active: true },
@@ -39,132 +44,56 @@ const App = () => {
       {/* Main Content Area */}
       <main className="flex-1 py-8 relative z-10">
         <Container>
-          {/* Welcome Section */}
-          <section className="text-center mb-12">
+          {/* Welcome Section with Progress */}
+          <section className="text-center mb-8">
             <h2 className="text-5xl font-bold mb-4 text-glow animate-float">
               <span className="gradient-text">Welcome to HeroPath!</span> 🚀
             </h2>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-300 mb-6">
               Transform your productivity into an epic journey
             </p>
+
+            {/* Progress Summary */}
+            <div className="max-w-2xl mx-auto space-y-4">
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <Badge variant="level" size="lg">
+                  Level {progress.level}
+                </Badge>
+                <Badge variant="xp" size="lg">
+                  {progress.totalXP} Total XP
+                </Badge>
+                <Badge variant="primary" size="lg">
+                  {progress.completedTasksCount} Tasks Completed
+                </Badge>
+                {progress.streak > 0 && (
+                  <Badge variant="success" size="lg">
+                    🔥 {progress.streak} Day Streak
+                  </Badge>
+                )}
+              </div>
+              <ProgressBar
+                value={xpProgress}
+                variant="xp"
+                showLabel
+                label={`${progress.currentXP} / ${progress.xpToNextLevel} XP to Level ${progress.level + 1}`}
+                size="lg"
+              />
+            </div>
           </section>
 
-          {/* Component Showcase Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {/* Card Component */}
-            <Card
-              title="Card Component"
-              subtitle="Flexible container for content"
-              hover
-            >
-              <p className="text-gray-600 mb-4">
-                This is a Card component with title, subtitle, and hover effect.
-              </p>
-              <div className="flex gap-2">
-                <Badge variant="primary">Primary</Badge>
-                <Badge variant="success">Success</Badge>
-                <Badge variant="xp">XP</Badge>
-              </div>
-            </Card>
-
-            {/* Progress Bar */}
-            <Card title="Progress Bar" hover>
-              <div className="space-y-4">
-                <ProgressBar value={65} variant="xp" showLabel label="Experience Points" />
-                <ProgressBar value={45} variant="level" showLabel label="Level Progress" />
-                <ProgressBar value={80} variant="success" showLabel />
-              </div>
-            </Card>
-
-            {/* Buttons */}
-            <Card title="Button Variants" hover>
-              <div className="space-y-3">
-                <Button variant="primary" fullWidth>
-                  Primary Button
-                </Button>
-                <Button variant="secondary" fullWidth>
-                  Secondary Button
-                </Button>
-                <Button variant="ghost" fullWidth>
-                  Ghost Button
-                </Button>
-              </div>
-            </Card>
-
-            {/* Input Components */}
-            <Card title="Form Components" hover>
-              <div className="space-y-4">
-                <Input
-                  label="Task Title"
-                  placeholder="Enter task title..."
-                  fullWidth
-                />
-                <Textarea
-                  label="Description"
-                  placeholder="Enter description..."
-                  fullWidth
-                />
-              </div>
-            </Card>
-
-            {/* Badges */}
-            <Card title="Badge Variants" hover>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="primary">Primary</Badge>
-                <Badge variant="success">Success</Badge>
-                <Badge variant="warning">Warning</Badge>
-                <Badge variant="danger">Danger</Badge>
-                <Badge variant="xp">XP</Badge>
-                <Badge variant="level">Level</Badge>
-                <Badge variant="narrative">Story</Badge>
-              </div>
-            </Card>
-
-            {/* Modal Trigger */}
-            <Card title="Modal Component" hover>
-              <p className="text-gray-600 mb-4">
-                Click the button below to open a modal dialog.
-              </p>
-              <Button
-                variant="primary"
-                fullWidth
-                onClick={() => setIsModalOpen(true)}
-              >
-                Open Modal
-              </Button>
-            </Card>
+          {/* Task Management Dashboard */}
+          <div className="space-y-6">
+            <TaskForm />
+            <TaskList />
           </div>
         </Container>
       </main>
-
-      {/* Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Example Modal"
-        size="md"
-        footer={
-          <div className="flex justify-end gap-2">
-            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={() => setIsModalOpen(false)}>
-              Confirm
-            </Button>
-          </div>
-        }
-      >
-        <p className="text-gray-600">
-          This is an example modal dialog. You can add any content here, including forms,
-          images, or other components.
-        </p>
-      </Modal>
 
       {/* Application Footer */}
       <footer className="bg-slate-900/50 border-t border-purple-500/30 backdrop-blur-lg py-6 relative z-10">
         <Container>
           <div className="text-center text-sm text-gray-400">
-            <p>&copy; 2025 HeroPath - Design System & Component Library Ready</p>
+            <p>&copy; 2025 HeroPath - Your Epic Productivity Journey</p>
             <p className="mt-2 text-xs text-gray-500">Level up your productivity! 🎮</p>
           </div>
         </Container>

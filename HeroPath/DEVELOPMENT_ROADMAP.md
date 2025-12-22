@@ -1,4 +1,5 @@
 # HeroPath - Development Roadmap
+
 ## 1-Month Agile Sprint Plan
 
 > **Project Vision**: A gamified task management application - Users earn XP, level up, and feel progress as they complete their tasks.
@@ -6,8 +7,9 @@
 ---
 
 ## 📋 Table of Contents
+
 1. [Phase 1: Core Infrastructure & Setup (Week 1)](#phase-1-core-infrastructure--setup-week-1)
-2. [Phase 2: Core Features & State Management (Week 2)]    (#phase-2-core-features--state-management-week-2)
+2. [Phase 2: Core Features & State Management (Week 2)] (#phase-2-core-features--state-management-week-2)
 3. [Phase 3: Gamification Mechanics (Week 3)](#phase-3-gamification-mechanics-week-3)
 4. [Phase 4: Polish, Testing & Deployment (Week 4)](#phase-4-polish-testing--deployment-week-4)
 5. [Phase 5: Unique & Innovative Features (Post-MVP)](#phase-5-unique--innovative-features-post-mvp)
@@ -20,6 +22,7 @@
 ## Phase 1: Core Infrastructure & Setup (Week 1)
 
 ### 🎯 Sprint Goals
+
 - Modern React + TypeScript project setup
 - Tailwind CSS integration
 - Project architecture and folder structure
@@ -28,6 +31,7 @@
 ### 📦 Technical Tasks
 
 #### 1.1 Project Setup (Day 1-2)
+
 ```bash
 # To-dos:
 - [x] Vite + React + TypeScript template setup
@@ -38,6 +42,7 @@
 ```
 
 **File Structure:**
+
 ```
 HeroPath/
 ├── src/
@@ -57,6 +62,7 @@ HeroPath/
 ```
 
 #### 1.2 Design System & Component Library (Day 3-4)
+
 - [x] **Design Tokens**: Color palette, typography, spacing system
 - [x] **Base Components**:
   - Button (primary, secondary, ghost variants)
@@ -72,6 +78,7 @@ HeroPath/
   - Sidebar (optional)
 
 **Tailwind Customization:**
+
 ```typescript
 // tailwind.config.js - Gamification theme colors
 theme: {
@@ -90,8 +97,10 @@ theme: {
 ```
 
 #### 1.3 State Management Setup (Day 5)
+
 - [x] **Zustand** or **Jotai** installation (lightweight and modern)
 - [x] Store structure design:
+
   ```typescript
   // store/types.ts
   interface Task {
@@ -136,10 +145,12 @@ theme: {
   ```
 
 **State Management Choice:**
+
 - **Zustand** (Recommended): Minimal, TypeScript-friendly, middleware support
 - **Jotai**: Atomic state management, React-native approach
 
 #### 1.4 LocalStorage Service (Day 5)
+
 - [x] LocalStorage wrapper utility
 - [x] Data persistence strategy
 - [x] Migration system (for future versions)
@@ -155,6 +166,7 @@ export const storage = {
 ```
 
 ### ✅ Definition of Done - Phase 1
+
 - [x] Project runs successfully (`npm run dev`)
 - [x] Tailwind CSS works correctly
 - [x] At least 5 base components ready and usable (10 components created)
@@ -166,6 +178,7 @@ export const storage = {
 ## Phase 2: Core Features & State Management (Week 2)
 
 ### 🎯 Sprint Goals
+
 - Task add/delete/edit functionality
 - State management implementation
 - LocalStorage integration
@@ -174,7 +187,9 @@ export const storage = {
 ### 📦 Technical Tasks
 
 #### 2.1 Task Management Feature (Day 1-3)
+
 - [ ] **Task Store** implementation:
+
   ```typescript
   // store/taskStore.ts
   interface TaskStore {
@@ -194,12 +209,13 @@ export const storage = {
   - `TaskItem`: Individual task card
   - `TaskFilters`: Filtering (All, Active, Completed, By Category, By Difficulty)
 
-- [ ] **Form Validation**: 
+- [ ] **Form Validation**:
   - Title required (min 3 characters)
   - XP value auto-calculation (based on difficulty level)
   - Category selection (optional but recommended)
 
 #### 2.2 LocalStorage Persistence (Day 3-4)
+
 - [ ] Synchronize stores with LocalStorage
 - [ ] Debounced save (for performance)
 - [ ] Error handling (quota exceeded, etc.)
@@ -211,6 +227,7 @@ export const storage = {
 ```
 
 #### 2.3 UI/UX Implementation (Day 4-5)
+
 - [ ] **Main Page Layout**:
   - Header (HeroPath logo, user level display, hero character avatar)
   - Task input area (quick add)
@@ -227,12 +244,14 @@ export const storage = {
   - Tablet and desktop breakpoints
 
 #### 2.4 Error Handling & Edge Cases (Day 5)
+
 - [ ] Empty state (when no tasks)
 - [ ] Error boundaries
 - [ ] Toast notifications (success/error messages)
 - [ ] Input validation feedback
 
 ### ✅ Definition of Done - Phase 2
+
 - [ ] Task add/delete/edit working
 - [ ] Data persisted in LocalStorage
 - [ ] Data preserved on page refresh
@@ -244,6 +263,7 @@ export const storage = {
 ## Phase 3: Gamification Mechanics (Week 3)
 
 ### 🎯 Sprint Goals
+
 - XP (Experience Points) system
 - Level system
 - Progress tracking
@@ -252,7 +272,9 @@ export const storage = {
 ### 📦 Technical Tasks
 
 #### 3.1 Gamification Store (Day 1-2)
+
 - [ ] **Progress Store** implementation:
+
   ```typescript
   // store/progressStore.ts
   interface ProgressStore {
@@ -264,7 +286,7 @@ export const storage = {
     streak: number;
     skillTree: SkillTree;
     heroCharacter: HeroCharacter;
-    
+
     addXP: (amount: number, skillCategory?: string) => void;
     levelUp: () => void;
     calculateXPToNextLevel: () => number;
@@ -282,7 +304,9 @@ export const storage = {
   ```
 
 #### 3.2 Level System (Day 2-3)
+
 - [ ] **Level Progression Formula**:
+
   ```typescript
   // Level 1: 0-100 XP
   // Level 2: 100-250 XP
@@ -300,6 +324,7 @@ export const storage = {
   - Character visual update
 
 #### 3.3 Progress Visualization (Day 3-4)
+
 - [ ] **XP Progress Bar**:
   - Current XP / Next Level XP
   - Animated progress bar
@@ -320,6 +345,7 @@ export const storage = {
   - etc.
 
 #### 3.4 Task Completion Flow (Day 4-5)
+
 - [ ] When task is completed:
   1. Task transitions to completed state
   2. XP is earned
@@ -336,6 +362,7 @@ export const storage = {
   - Skill point notification
 
 #### 3.5 Motivational Elements (Day 5)
+
 - [ ] **Daily Goals** (Optional):
   - Daily target task count
   - Streak tracking
@@ -347,6 +374,7 @@ export const storage = {
   - Context-aware encouragement based on time of day
 
 ### ✅ Definition of Done - Phase 3
+
 - [ ] XP system working
 - [ ] Level system implemented
 - [ ] Progress bar working correctly
@@ -359,6 +387,7 @@ export const storage = {
 ## Phase 4: Polish, Testing & Deployment (Week 4)
 
 ### 🎯 Sprint Goals
+
 - Code quality improvements
 - Performance optimizations
 - Testing
@@ -367,6 +396,7 @@ export const storage = {
 ### 📦 Technical Tasks
 
 #### 4.1 Code Quality (Day 1-2)
+
 - [ ] **TypeScript Strict Mode**:
   - Remove all `any` types
   - Type safety check
@@ -385,6 +415,7 @@ export const storage = {
   - Screen reader support
 
 #### 4.2 Performance Optimization (Day 2-3)
+
 - [ ] **React Optimization**:
   - `React.memo` usage (when needed)
   - `useMemo` and `useCallback` optimizations
@@ -402,6 +433,7 @@ export const storage = {
   - Re-render optimization
 
 #### 4.3 Testing (Day 3-4)
+
 - [ ] **Unit Tests** (Vitest):
   - Utility functions
   - XP calculation logic
@@ -422,6 +454,7 @@ export const storage = {
   - Critical user flows
 
 #### 4.4 UI/UX Polish (Day 4)
+
 - [ ] **Visual Polish**:
   - Consistent spacing
   - Color contrast check
@@ -439,6 +472,7 @@ export const storage = {
   - System preference detection
 
 #### 4.5 Deployment (Day 5)
+
 - [ ] **Build Optimization**:
   - Production build
   - Environment variables
@@ -460,6 +494,7 @@ export const storage = {
   - Component documentation
 
 ### ✅ Definition of Done - Phase 4
+
 - [ ] All tests passing
 - [ ] Production build successful
 - [ ] Application deployed
@@ -478,10 +513,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### 📦 Innovative Feature Set
 
 #### 5.1 Narrative Journey System ⭐⭐⭐⭐⭐
+
 **What it is**: Each task is part of a larger story. Users progress through chapters, and completing tasks advances the narrative.
 
 **Implementation**:
+
 - [ ] **Story Chapters**:
+
   ```typescript
   interface StoryChapter {
     id: string;
@@ -514,10 +552,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.2 AI-Powered Task Suggestions ⭐⭐⭐⭐⭐
+
 **What it is**: Intelligent task recommendations based on user behavior, time of day, and context.
 
 **Implementation**:
+
 - [ ] **AI Service Integration**:
+
   ```typescript
   // services/aiService.ts
   interface TaskSuggestion {
@@ -535,7 +576,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
     userHistory: Task[],
     currentTime: Date,
     userMood?: string
-  ): Promise<TaskSuggestion[]>
+  ): Promise<TaskSuggestion[]>;
   ```
 
 - [ ] **Context-Aware Suggestions**:
@@ -554,15 +595,23 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.3 Emotional State Tracking ⭐⭐⭐⭐
+
 **What it is**: Users can log their emotional state when completing tasks, creating emotional intelligence insights.
 
 **Implementation**:
+
 - [ ] **Emotional State System**:
+
   ```typescript
   interface EmotionalState {
     taskId: string;
     beforeState: 'excited' | 'anxious' | 'calm' | 'motivated' | 'tired';
-    afterState: 'satisfied' | 'accomplished' | 'relieved' | 'proud' | 'energized';
+    afterState:
+      | 'satisfied'
+      | 'accomplished'
+      | 'relieved'
+      | 'proud'
+      | 'energized';
     timestamp: Date;
   }
 
@@ -592,10 +641,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.4 Visual Hero Character Progression ⭐⭐⭐⭐⭐
+
 **What it is**: A visual character that evolves and changes appearance based on user progress, level, and achievements.
 
 **Implementation**:
+
 - [ ] **Character System**:
+
   ```typescript
   interface HeroCharacter {
     baseAppearance: string; // SVG or image path
@@ -636,10 +688,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.5 Skill Tree System ⭐⭐⭐⭐
+
 **What it is**: Tasks contribute to different skill categories, creating a visual skill tree that grows over time.
 
 **Implementation**:
+
 - [ ] **Skill Categories**:
+
   ```typescript
   interface SkillTree {
     productivity: Skill;
@@ -675,10 +730,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.6 Context-Aware Task Recommendations ⭐⭐⭐⭐
+
 **What it is**: Tasks suggested based on real-world context: time, location, weather, calendar, and more.
 
 **Implementation**:
+
 - [ ] **Context Detection**:
+
   ```typescript
   interface Context {
     timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night';
@@ -689,10 +747,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
     deviceActivity?: 'active' | 'idle';
   }
 
-  function getContextualTasks(
-    context: Context,
-    availableTasks: Task[]
-  ): Task[]
+  function getContextualTasks(context: Context, availableTasks: Task[]): Task[];
   ```
 
 - [ ] **Smart Recommendations**:
@@ -712,10 +767,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.7 Collaborative Quests ⭐⭐⭐
+
 **What it is**: Friends can join together to complete shared quests and challenges.
 
 **Implementation**:
+
 - [ ] **Quest System**:
+
   ```typescript
   interface CollaborativeQuest {
     id: string;
@@ -748,10 +806,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.8 Visual Journey Map ⭐⭐⭐⭐⭐
+
 **What it is**: An interactive, visual map showing the user's productivity journey with landmarks, milestones, and paths.
 
 **Implementation**:
+
 - [ ] **Journey Map System**:
+
   ```typescript
   interface JourneyMap {
     currentLocation: MapNode;
@@ -795,10 +856,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.9 Dynamic Difficulty Adjustment ⭐⭐⭐
+
 **What it is**: System learns user patterns and automatically adjusts task difficulty and XP rewards.
 
 **Implementation**:
+
 - [ ] **Adaptive System**:
+
   ```typescript
   interface DifficultyProfile {
     userId: string;
@@ -812,7 +876,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
     baseXP: number,
     userProfile: DifficultyProfile,
     taskHistory: Task[]
-  ): number
+  ): number;
   ```
 
 - [ ] **Learning Algorithm**:
@@ -831,10 +895,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.10 Time-Based Challenges & Events ⭐⭐⭐⭐
+
 **What it is**: Limited-time challenges, seasonal events, and time-sensitive quests that create urgency and excitement.
 
 **Implementation**:
+
 - [ ] **Challenge System**:
+
   ```typescript
   interface TimeChallenge {
     id: string;
@@ -870,9 +937,11 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.11 Real-World Habit Integration ⭐⭐⭐
+
 **What it is**: Connect with real-world habits, health apps, and life goals beyond just tasks.
 
 **Implementation**:
+
 - [ ] **Integration Points**:
   - Health apps (steps, workouts)
   - Calendar apps (meetings, events)
@@ -880,6 +949,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Learning platforms (courses, reading)
 
 - [ ] **Habit Tracking**:
+
   ```typescript
   interface Habit {
     id: string;
@@ -905,10 +975,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ---
 
 #### 5.12 Story Mode & Narrative Choices ⭐⭐⭐⭐⭐
+
 **What it is**: Tasks are part of an interactive story where user choices affect the narrative and outcomes.
 
 **Implementation**:
+
 - [ ] **Narrative System**:
+
   ```typescript
   interface NarrativeChoice {
     id: string;
@@ -949,22 +1022,14 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### 🎯 Implementation Priority
 
 **Phase 5.1 - High Priority (Month 2)**
+
 1. Visual Hero Character Progression
 2. Skill Tree System
 3. Narrative Journey System (basic)
 
-**Phase 5.2 - Medium Priority (Month 3)**
-4. AI-Powered Task Suggestions
-5. Visual Journey Map
-6. Emotional State Tracking
+**Phase 5.2 - Medium Priority (Month 3)** 4. AI-Powered Task Suggestions 5. Visual Journey Map 6. Emotional State Tracking
 
-**Phase 5.3 - Future Enhancements (Month 4+)**
-7. Context-Aware Recommendations
-8. Time-Based Challenges
-9. Collaborative Quests
-10. Dynamic Difficulty Adjustment
-11. Real-World Habit Integration
-12. Story Mode & Narrative Choices
+**Phase 5.3 - Future Enhancements (Month 4+)** 7. Context-Aware Recommendations 8. Time-Based Challenges 9. Collaborative Quests 10. Dynamic Difficulty Adjustment 11. Real-World Habit Integration 12. Story Mode & Narrative Choices
 
 ---
 
@@ -973,6 +1038,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### 🎯 Muscles to Strengthen in This Project
 
 #### 1. **State Management Architecture** ⭐⭐⭐⭐⭐
+
 - **Goal**: Scalable and maintainable state management
 - **Learnings**:
   - Modern state management with Zustand/Jotai
@@ -981,6 +1047,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Type-safe state management
 
 #### 2. **TypeScript Mastery** ⭐⭐⭐⭐⭐
+
 - **Goal**: Type-safe, error-free code
 - **Learnings**:
   - Advanced TypeScript patterns
@@ -989,6 +1056,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Type inference optimization
 
 #### 3. **Component Architecture** ⭐⭐⭐⭐
+
 - **Goal**: Reusable, maintainable component structure
 - **Learnings**:
   - Feature-based folder structure
@@ -997,6 +1065,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Props design
 
 #### 4. **Performance Optimization** ⭐⭐⭐⭐
+
 - **Goal**: Fast and responsive application
 - **Learnings**:
   - React performance best practices
@@ -1005,6 +1074,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Memoization strategies
 
 #### 5. **Data Persistence** ⭐⭐⭐
+
 - **Goal**: Reliable data storage
 - **Learnings**:
   - LocalStorage best practices
@@ -1013,6 +1083,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Data validation
 
 #### 6. **AI/ML Integration** ⭐⭐⭐⭐ (Post-MVP)
+
 - **Goal**: Intelligent features
 - **Learnings**:
   - API integration (OpenAI, etc.)
@@ -1021,6 +1092,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Privacy-first AI
 
 #### 7. **Advanced Animations** ⭐⭐⭐ (Post-MVP)
+
 - **Goal**: Delightful user experience
 - **Learnings**:
   - Framer Motion advanced patterns
@@ -1039,11 +1111,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### 🎨 UX Principles
 
 #### 1. **Progress Visibility** (Progress Visibility)
+
 - User should always know where they are
 - XP bar, level badge, statistics always visible
 - Instant feedback when task is completed
 
 #### 2. **Instant Gratification** (Instant Reward)
+
 - When task is completed:
   - ✅ Checkmark animation
   - 💎 XP popup
@@ -1052,30 +1126,35 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - 🎭 Character reaction
 
 #### 3. **Visual Delight** (Visual Pleasure)
+
 - Modern, clean UI
 - Smooth animations
 - Colorful and vibrant design
 - Micro-interactions
 
 #### 4. **Sense of Achievement** (Achievement Feeling)
+
 - Level ups should be specially celebrated
 - Milestones should be highlighted
 - Statistics dashboard to view past achievements
 - Visual character progression
 
 #### 5. **Effortless Experience** (Frictionless Usage)
+
 - Quick task addition (minimal clicks)
 - Keyboard shortcuts (optional)
 - Smooth transitions
 - No friction
 
 #### 6. **Emotional Connection** (Emotional Bond)
+
 - Character that users care about
 - Story that users want to continue
 - Personal journey visualization
 - Emotional state awareness
 
 ### 📊 Success Metrics (Post-MVP)
+
 - Daily Active Users (DAU)
 - Task completion rate
 - Average session duration
@@ -1091,23 +1170,27 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### ✅ Required Features (Must Have)
 
 #### Core Functionality
+
 - [ ] Task addition (title, description, XP value, difficulty)
 - [ ] Task deletion
 - [ ] Task completion (toggle)
 - [ ] Task editing (optional but recommended)
 
 #### Gamification
+
 - [ ] XP system (earn XP when task completed)
 - [ ] Level system (level calculation based on XP)
 - [ ] Progress bar (current XP / next level XP)
 - [ ] Level badge display
 
 #### Data Persistence
+
 - [ ] LocalStorage integration
 - [ ] Data preserved on page refresh
 - [ ] Error handling (quota exceeded, etc.)
 
 #### UI/UX
+
 - [ ] Modern, responsive design
 - [ ] Basic animations
 - [ ] Empty states
@@ -1117,6 +1200,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ### 🎁 Nice to Have (Post-MVP)
 
 #### Phase 5 Features (Unique & Innovative)
+
 - [ ] Visual Hero Character Progression
 - [ ] Skill Tree System
 - [ ] Narrative Journey System
@@ -1131,6 +1215,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
 - [ ] Story Mode & Narrative Choices
 
 #### Standard Enhancements
+
 - [ ] Dark mode
 - [ ] Task categories/tags
 - [ ] Task priority levels
@@ -1151,54 +1236,64 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ## 📅 Weekly Milestones
 
 ### Week 1 Milestone
-- [ ] Project setup completed  
-- [ ] Design system ready  
-- [ ] Base components created  
-- [ ] State management set up  
+
+- [ ] Project setup completed
+- [ ] Design system ready
+- [ ] Base components created
+- [ ] State management set up
 
 ### Week 2 Milestone
-- [ ] Task add/delete working  
-- [ ] LocalStorage integration completed  
-- [ ] Basic UI/UX flows ready  
+
+- [ ] Task add/delete working
+- [ ] LocalStorage integration completed
+- [ ] Basic UI/UX flows ready
 
 ### Week 3 Milestone
-- [ ] XP system working  
-- [ ] Level system implemented  
-- [ ] Progress visualization completed  
+
+- [ ] XP system working
+- [ ] Level system implemented
+- [ ] Progress visualization completed
 
 ### Week 4 Milestone
-- [ ] Code quality improved  
-- [ ] Testing completed  
-- [ ] Production deployment done  
+
+- [ ] Code quality improved
+- [ ] Testing completed
+- [ ] Production deployment done
 
 ### Post-MVP Milestones
-- [ ] Unique features implementation  
-- [ ] Market differentiation achieved  
-- [ ] User engagement optimization  
+
+- [ ] Unique features implementation
+- [ ] Market differentiation achieved
+- [ ] User engagement optimization
 
 ---
 
 ## 🛠️ Technology Stack
 
 ### Core
+
 - **React 18+** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool
 - **Tailwind CSS** - Styling
 
 ### State Management
+
 - **Zustand** or **Jotai** - State management
 
 ### Development Tools
+
 - **ESLint** - Linting
 - **Prettier** - Code formatting
 - **Vitest** - Testing framework
 - **React Testing Library** - Component testing
 
 ### Deployment
+
 - **Vercel** (Recommended) - Hosting
 
 ### Optional
+
 - **Framer Motion** - Animations
 - **React Hook Form** - Form management
 - **Zod** - Schema validation
@@ -1211,25 +1306,31 @@ These features set HeroPath apart from standard todo apps and create a unique va
 ## 📚 Learning Resources
 
 ### State Management
+
 - [Zustand Documentation](https://docs.pmnd.rs/zustand)
 - [Jotai Documentation](https://jotai.org/)
 
 ### React Best Practices
+
 - [React Beta Docs](https://react.dev/)
 - [Kent C. Dodds Blog](https://kentcdodds.com/blog)
 
 ### TypeScript
+
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 - [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
 
 ### Performance
+
 - [Web.dev Performance](https://web.dev/performance/)
 
 ### AI Integration
+
 - [OpenAI API Documentation](https://platform.openai.com/docs)
 - [AI Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
 
 ### Game Design & Gamification
+
 - [Gamification Design Patterns](https://www.gamified.uk/gamification-examples/)
 - [Game Design Principles](https://www.gamedeveloper.com/design)
 
@@ -1244,6 +1345,7 @@ Each phase builds upon the previous one, and each week ends with a working, depl
 **Agile approach** ensures testable, deployable increments at the end of each week.
 
 **The unique features in Phase 5** create a compelling value proposition that no other todo app offers:
+
 - Narrative storytelling
 - Visual character progression
 - Emotional intelligence

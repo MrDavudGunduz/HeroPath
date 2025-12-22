@@ -2,7 +2,11 @@ import { useState, useMemo } from 'react';
 import { Card, Button, Badge } from '../../../components';
 import { useTaskStore } from '../model/store';
 import { TaskItem } from './TaskItem';
-import { TaskFilters, type FilterType, type DifficultyFilter } from './TaskFilters';
+import {
+  TaskFilters,
+  type FilterType,
+  type DifficultyFilter,
+} from './TaskFilters';
 
 export function TaskList() {
   const allTasks = useTaskStore((s) => s.tasks);
@@ -14,7 +18,9 @@ export function TaskList() {
 
   const [filter, setFilter] = useState<FilterType>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('');
-  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter | undefined>();
+  const [difficultyFilter, setDifficultyFilter] = useState<
+    DifficultyFilter | undefined
+  >();
 
   // Filter tasks based on current filter state
   const tasks = useMemo(() => {
@@ -44,7 +50,14 @@ export function TaskList() {
     }
 
     return filtered;
-  }, [allTasks, filter, categoryFilter, difficultyFilter, getTasksByCategory, getTasksByDifficulty]);
+  }, [
+    allTasks,
+    filter,
+    categoryFilter,
+    difficultyFilter,
+    getTasksByCategory,
+    getTasksByDifficulty,
+  ]);
 
   const completedCount = allTasks.filter((t) => t.completed).length;
   const activeCount = allTasks.length - completedCount;
@@ -109,11 +122,15 @@ export function TaskList() {
       ) : (
         <ul className="space-y-3">
           {tasks.map((t) => (
-            <TaskItem key={t.id} task={t} onToggle={toggleTask} onRemove={removeTask} />
+            <TaskItem
+              key={t.id}
+              task={t}
+              onToggle={toggleTask}
+              onRemove={removeTask}
+            />
           ))}
         </ul>
       )}
     </Card>
   );
 }
-

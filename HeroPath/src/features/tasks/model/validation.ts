@@ -17,15 +17,21 @@ export const taskDraftSchema = z.object({
     .enum(getAllDifficulties() as [string, ...string[]])
     .optional()
     .default(DEFAULT_DIFFICULTY),
-  category: z.string().trim().max(50, 'Category is too long (max 50 chars)').optional(),
+  category: z
+    .string()
+    .trim()
+    .max(50, 'Category is too long (max 50 chars)')
+    .optional(),
   emotionalState: z
     .enum(['excited', 'calm', 'challenged', 'satisfied'])
     .optional(),
-  storyChapter: z.string().trim().max(100, 'Story chapter is too long (max 100 chars)').optional(),
+  storyChapter: z
+    .string()
+    .trim()
+    .max(100, 'Story chapter is too long (max 100 chars)')
+    .optional(),
   xpValue: z.number().int().min(1).max(1000).optional(),
 });
 
 export type TaskDraftInput = z.input<typeof taskDraftSchema>;
 export type TaskDraft = z.output<typeof taskDraftSchema>;
-
-

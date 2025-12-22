@@ -1,6 +1,6 @@
 /**
  * Data Migration Examples
- * 
+ *
  * This file contains migration functions for different data versions.
  * Add new migrations here when updating data structures.
  */
@@ -65,7 +65,7 @@ export function migrateAllStores(): void {
   // This can be called on app initialization
   // to ensure all stores are migrated
   console.log('Checking for data migrations...');
-  
+
   // Migrations are handled automatically by the storage system
   // when data is loaded
 }

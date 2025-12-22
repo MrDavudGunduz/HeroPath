@@ -1,6 +1,6 @@
 /**
  * Task-related Constants
- * 
+ *
  * Centralized constants for task difficulty levels, XP values, and related configurations.
  * This ensures consistency across the application and makes it easy to adjust values.
  */
@@ -44,7 +44,7 @@ export const DIFFICULTY_DESCRIPTIONS: Record<TaskDifficulty, string> = {
 
 /**
  * Calculate XP value for a given difficulty level
- * 
+ *
  * @param difficulty - The difficulty level
  * @returns The XP value for the difficulty level
  */
@@ -61,11 +61,10 @@ export function getAllDifficulties(): TaskDifficulty[] {
 
 /**
  * Get difficulty label with XP value
- * 
+ *
  * @param difficulty - The difficulty level
  * @returns Formatted string like "Easy (10 XP)"
  */
 export function getDifficultyLabel(difficulty: TaskDifficulty): string {
   return DIFFICULTY_DESCRIPTIONS[difficulty];
 }
-

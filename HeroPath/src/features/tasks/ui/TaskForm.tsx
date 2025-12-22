@@ -1,11 +1,15 @@
 import { Button, Card, Input, Textarea } from '../../../components';
 import { cn } from '../../../utils/cn';
-import { getAllDifficulties, getDifficultyLabel, type TaskDifficulty } from '../model/constants';
+import {
+  getAllDifficulties,
+  getDifficultyLabel,
+  type TaskDifficulty,
+} from '../model/constants';
 import { useTaskForm } from '../hooks/useTaskForm';
 
 /**
  * Task Form Component
- * 
+ *
  * UI-only component for task creation form.
  * All form logic is handled by the useTaskForm hook.
  */
@@ -75,7 +79,7 @@ export function TaskForm() {
               className={cn(
                 'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200',
                 'bg-gray-800/50 text-white',
-                'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50',
+                'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50'
               )}
             >
               {getAllDifficulties().map((diff) => (
@@ -118,4 +122,3 @@ export function TaskForm() {
     </Card>
   );
 }
-

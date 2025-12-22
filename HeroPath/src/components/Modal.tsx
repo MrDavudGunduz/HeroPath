@@ -27,7 +27,7 @@ export interface ModalProps {
 
 /**
  * Modal/Dialog Component
- * 
+ *
  * A modal component for displaying content in an overlay.
  * Supports different sizes, keyboard navigation, and overlay interactions.
  */
@@ -73,7 +73,7 @@ const Modal: React.FC<ModalProps> = ({
       if (!root) return;
 
       const focusable = root.querySelector<HTMLElement>(
-        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])',
+        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
       );
       (focusable ?? root).focus();
     });
@@ -119,8 +119,8 @@ const Modal: React.FC<ModalProps> = ({
 
     const focusables = Array.from(
       root.querySelectorAll<HTMLElement>(
-        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])',
-      ),
+        'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
+      )
     ).filter((el) => !el.hasAttribute('disabled') && el.tabIndex !== -1);
 
     if (focusables.length === 0) {
@@ -198,7 +198,9 @@ const Modal: React.FC<ModalProps> = ({
 
         {/* Footer */}
         {footer && (
-          <div className="px-6 py-4 border-t border-purple-500/20">{footer}</div>
+          <div className="px-6 py-4 border-t border-purple-500/20">
+            {footer}
+          </div>
         )}
       </div>
     </div>

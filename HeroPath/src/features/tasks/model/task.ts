@@ -13,5 +13,3 @@ export interface Task {
   emotionalState?: 'excited' | 'calm' | 'challenged' | 'satisfied';
   storyChapter?: string; // Links to narrative system
 }
-
-

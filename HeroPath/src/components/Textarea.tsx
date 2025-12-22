@@ -17,7 +17,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 
 /**
  * Textarea Component
- * 
+ *
  * A styled textarea component with label and error handling.
  */
 const Textarea: React.FC<TextareaProps> = ({
@@ -34,11 +34,15 @@ const Textarea: React.FC<TextareaProps> = ({
   const textareaId = id ?? `textarea-${reactId}`;
   const errorId = error ? `${textareaId}-error` : undefined;
   const helperId = helperText && !error ? `${textareaId}-help` : undefined;
-  const describedBy = [errorId, helperId].filter(Boolean).join(' ') || undefined;
-  
-  const baseTextareaClasses = 'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 resize-y bg-gray-800/50 text-white placeholder-gray-400';
-  const normalTextareaClasses = 'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50';
-  const errorTextareaClasses = 'border-hero-danger focus:border-hero-danger focus:ring-hero-danger focus:shadow-glow-danger/50';
+  const describedBy =
+    [errorId, helperId].filter(Boolean).join(' ') || undefined;
+
+  const baseTextareaClasses =
+    'block w-full px-3 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 transition-all duration-200 resize-y bg-gray-800/50 text-white placeholder-gray-400';
+  const normalTextareaClasses =
+    'border-gray-600/50 focus:border-hero-primary focus:ring-hero-primary focus:shadow-glow-primary/50';
+  const errorTextareaClasses =
+    'border-hero-danger focus:border-hero-danger focus:ring-hero-danger focus:shadow-glow-danger/50';
   const widthClasses = fullWidth ? 'w-full' : '';
 
   return (
@@ -57,7 +61,7 @@ const Textarea: React.FC<TextareaProps> = ({
         className={cn(
           baseTextareaClasses,
           error ? errorTextareaClasses : normalTextareaClasses,
-          className,
+          className
         )}
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={describedBy}

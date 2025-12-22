@@ -6,7 +6,7 @@ describe('ProgressBar Component', () => {
   describe('Rendering', () => {
     it('should render progress bar with correct value', () => {
       render(<ProgressBar value={50} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toBeInTheDocument();
       expect(progressBar).toHaveAttribute('aria-valuenow', '50');
@@ -16,7 +16,7 @@ describe('ProgressBar Component', () => {
 
     it('should render with custom max value', () => {
       render(<ProgressBar value={25} max={50} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toHaveAttribute('aria-valuenow', '25');
       expect(progressBar).toHaveAttribute('aria-valuemax', '50');
@@ -24,21 +24,21 @@ describe('ProgressBar Component', () => {
 
     it('should render with correct width style (50%)', () => {
       render(<ProgressBar value={50} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toHaveStyle({ width: '50%' });
     });
 
     it('should render with correct width style (100%)', () => {
       render(<ProgressBar value={100} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toHaveStyle({ width: '100%' });
     });
 
     it('should render with correct width style (0%)', () => {
       render(<ProgressBar value={0} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toHaveStyle({ width: '0%' });
     });
@@ -145,7 +145,7 @@ describe('ProgressBar Component', () => {
   describe('Accessibility', () => {
     it('should have proper ARIA attributes', () => {
       render(<ProgressBar value={50} max={200} />);
-      
+
       const progressBar = screen.getByRole('progressbar');
       expect(progressBar).toHaveAttribute('role', 'progressbar');
       expect(progressBar).toHaveAttribute('aria-valuenow', '50');
@@ -184,7 +184,7 @@ describe('ProgressBar Component', () => {
 
     it('should handle custom className', () => {
       const { container } = render(
-        <ProgressBar value={50} className="custom-class" />,
+        <ProgressBar value={50} className="custom-class" />
       );
       const wrapper = container.querySelector('.custom-class');
       expect(wrapper).toBeInTheDocument();

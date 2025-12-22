@@ -25,7 +25,7 @@ export interface ProgressBarProps {
 
 /**
  * ProgressBar Component
- * 
+ *
  * A progress bar component for displaying completion status, XP progress, etc.
  * Supports multiple variants, sizes, and animations.
  */
@@ -41,25 +41,30 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   // Calculate percentage
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
-  
-  const baseBarClasses = 'w-full bg-gray-800/50 rounded-full overflow-hidden border border-gray-700/50';
-  
+
+  const baseBarClasses =
+    'w-full bg-gray-800/50 rounded-full overflow-hidden border border-gray-700/50';
+
   const sizeClasses = {
     sm: 'h-2',
     md: 'h-3',
     lg: 'h-4',
   };
-  
+
   const variantGradients = {
-    primary: 'bg-gradient-to-r from-hero-primary via-indigo-500 to-hero-primary',
-    success: 'bg-gradient-to-r from-hero-success via-emerald-400 to-hero-success',
+    primary:
+      'bg-gradient-to-r from-hero-primary via-indigo-500 to-hero-primary',
+    success:
+      'bg-gradient-to-r from-hero-success via-emerald-400 to-hero-success',
     warning: 'bg-gradient-to-r from-hero-warning via-amber-400 to-hero-warning',
     danger: 'bg-gradient-to-r from-hero-danger via-red-500 to-hero-danger',
     xp: 'bg-gradient-to-r from-hero-xp via-purple-500 to-pink-500',
     level: 'bg-gradient-to-r from-hero-level via-orange-500 to-amber-500',
   };
-  
-  const animationClasses = animated ? 'transition-all duration-700 ease-out relative' : '';
+
+  const animationClasses = animated
+    ? 'transition-all duration-700 ease-out relative'
+    : '';
   const glowClasses = {
     primary: 'shadow-glow-primary',
     success: 'shadow-glow-success',
@@ -77,7 +82,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             {label || `${Math.round(percentage)}%`}
           </span>
           {showLabel && label && (
-            <span className="text-sm font-bold text-white">{Math.round(percentage)}%</span>
+            <span className="text-sm font-bold text-white">
+              {Math.round(percentage)}%
+            </span>
           )}
         </div>
       )}
@@ -87,7 +94,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             variantGradients[variant],
             animationClasses,
             glowClasses[variant],
-            'h-full rounded-full relative overflow-hidden',
+            'h-full rounded-full relative overflow-hidden'
           )}
           style={{ width: `${percentage}%` }}
           role="progressbar"

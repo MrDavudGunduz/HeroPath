@@ -5,6 +5,7 @@
 ## 🎯 Project Vision
 
 HeroPath is not just another todo app. It's a gamified productivity experience where users:
+
 - Earn XP and level up by completing tasks
 - Progress through an interactive narrative journey
 - Develop skills across multiple categories
@@ -15,21 +16,25 @@ HeroPath is not just another todo app. It's a gamified productivity experience w
 ## ✨ Unique Features
 
 ### 🎮 Core Gamification
+
 - **XP & Level System**: Earn experience points and level up
 - **Skill Tree**: Develop skills in productivity, creativity, health, learning, and more
 - **Visual Hero Character**: Watch your character evolve with your progress
 - **Progress Visualization**: Beautiful progress bars, statistics, and journey maps
 
 ### 📖 Narrative Journey (Post-MVP)
+
 - **Story Chapters**: Tasks are part of a larger narrative
 - **Interactive Journey Map**: Visual representation of your productivity journey
 - **Story Mode**: Make choices that affect your narrative
 
 ### 🤖 AI-Powered (Post-MVP)
+
 - **Smart Task Suggestions**: AI recommends tasks based on your behavior
 - **Context-Aware Recommendations**: Suggestions based on time, weather, mood, and more
 
 ### 💭 Emotional Intelligence (Post-MVP)
+
 - **Emotional State Tracking**: Log how tasks make you feel
 - **Mood Insights**: Discover patterns in your emotional productivity
 - **Wellness Integration**: Optimize for both productivity and well-being
@@ -48,6 +53,7 @@ HeroPath is not just another todo app. It's a gamified productivity experience w
 See [DEVELOPMENT_ROADMAP.md](./DEVELOPMENT_ROADMAP.md) for the complete 1-month development plan and post-MVP features.
 
 ### Quick Overview:
+
 - **Week 1**: Core infrastructure & setup
 - **Week 2**: Core features & state management
 - **Week 3**: Gamification mechanics
@@ -57,7 +63,8 @@ See [DEVELOPMENT_ROADMAP.md](./DEVELOPMENT_ROADMAP.md) for the complete 1-month 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -141,4 +148,3 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Built with ❤️ for productive heroes everywhere**
-

@@ -12,10 +12,11 @@
 2. [Phase 2: Core Features & State Management (Week 2)] (#phase-2-core-features--state-management-week-2)
 3. [Phase 3: Gamification Mechanics (Week 3)](#phase-3-gamification-mechanics-week-3)
 4. [Phase 4: Polish, Testing & Deployment (Week 4)](#phase-4-polish-testing--deployment-week-4)
-5. [Phase 5: Unique & Innovative Features (Post-MVP)](#phase-5-unique--innovative-features-post-mvp)
-6. [Technical Competency Goals](#technical-competency-goals)
-7. [UX & Value Goals](#ux--value-goals)
-8. [MVP Definition of Done](#mvp-definition-of-done)
+5. [Phase 4.5: Backend & Cloud Data Persistence (Critical - Before Post-MVP)](#phase-45-backend--cloud-data-persistence-critical---before-post-mvp-features)
+6. [Phase 5: Unique & Innovative Features (Post-MVP)](#phase-5-unique--innovative-features-post-mvp)
+7. [Technical Competency Goals](#technical-competency-goals)
+8. [UX & Value Goals](#ux--value-goals)
+9. [MVP Definition of Done](#mvp-definition-of-done)
 
 ---
 
@@ -76,6 +77,32 @@ HeroPath/
   - Container
   - Header/Navbar
   - Sidebar (optional)
+
+- [ ] **Mobile-First Component Considerations**:
+  - **Touch Targets**: Minimum 44x44px (iOS) / 48x48px (Material) for all interactive elements
+  - **Button Sizes**: 
+    - Mobile: Larger touch targets, full-width on small screens
+    - Desktop: Compact sizes, auto-width
+  - **Input Fields**:
+    - Mobile: Full-width, larger font size (16px+ to prevent zoom on iOS)
+    - Proper input types for mobile keyboards (email, tel, number)
+    - Autocomplete attributes
+  - **Modal/Dialog**:
+    - Mobile: Full-screen or bottom sheet style
+    - Desktop: Centered modal with backdrop
+    - Swipe-to-dismiss on mobile
+  - **Card Components**:
+    - Mobile: Stack vertically, full-width
+    - Desktop: Grid layout, flexible widths
+  - **Navigation**:
+    - Mobile: Bottom navigation bar or hamburger menu
+    - Desktop: Top navigation or sidebar
+  - **Typography**:
+    - Mobile: Larger base font (16px+), increased line-height
+    - Responsive font sizes using `clamp()` or Tailwind responsive classes
+  - **Spacing**:
+    - Mobile: Tighter spacing, but maintain touch target sizes
+    - Desktop: More generous spacing
 
 **Tailwind Customization:**
 
@@ -177,6 +204,8 @@ export const storage = {
 
 ## Phase 2: Core Features & State Management (Week 2)
 
+> **📝 Testing Reminder**: Write tests **alongside** each feature. Don't wait until Phase 4!
+
 ### 🎯 Sprint Goals
 
 - Task add/delete/edit functionality
@@ -234,14 +263,67 @@ export const storage = {
   - Task list (scrollable)
   - Progress indicator (XP bar, level, skill tree preview)
 
+- [ ] **Mobile-First Responsive Design**:
+
+  **Breakpoints** (Tailwind defaults):
+  ```css
+  sm: 640px   /* Small tablets */
+  md: 768px   /* Tablets */
+  lg: 1024px  /* Small laptops */
+  xl: 1280px  /* Desktops */
+  2xl: 1536px /* Large desktops */
+  ```
+
+  **Mobile Layout (< 768px)**:
+  - [ ] Single column layout
+  - [ ] Bottom navigation bar (Tasks, Progress, Profile)
+  - [ ] Collapsible header (scroll to hide/show)
+  - [ ] Full-width task cards
+  - [ ] Floating action button (FAB) for "Add Task"
+  - [ ] Swipe gestures for task actions (swipe to complete/delete)
+  - [ ] Pull-to-refresh for task list
+  - [ ] Sticky task input at top or bottom
+
+  **Tablet Layout (768px - 1024px)**:
+  - [ ] Two-column layout (task list + detail view)
+  - [ ] Side navigation drawer
+  - [ ] Grid layout for task cards (2 columns)
+
+  **Desktop Layout (> 1024px)**:
+  - [ ] Three-column layout (sidebar + task list + detail view)
+  - [ ] Persistent sidebar navigation
+  - [ ] Hover states and tooltips
+  - [ ] Keyboard shortcuts support
+
+- [ ] **Touch Interactions** (Mobile):
+  - [ ] Swipe left on task → Delete action
+  - [ ] Swipe right on task → Complete action
+  - [ ] Long press → Context menu
+  - [ ] Pull down → Refresh
+  - [ ] Tap outside modal → Close
+  - [ ] Smooth scroll behavior
+  - [ ] Momentum scrolling (iOS)
+
+- [ ] **Mobile-Specific UX**:
+  - [ ] Viewport meta tag: `<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">`
+  - [ ] Safe area insets for notched devices (iOS)
+  - [ ] Prevent zoom on input focus (font-size: 16px+)
+  - [ ] Bottom sheet modals (better than center modals on mobile)
+  - [ ] Haptic feedback (if available)
+  - [ ] Loading skeletons instead of spinners
+
 - [ ] **Animations**:
   - Task add/delete animations (Framer Motion or CSS transitions)
   - Smooth transitions
   - Loading states
+  - Reduced motion support (`prefers-reduced-motion`)
 
-- [ ] **Responsive Design**:
-  - Mobile-first approach
-  - Tablet and desktop breakpoints
+- [ ] **Performance on Mobile**:
+  - [ ] Lazy loading for images
+  - [ ] Virtual scrolling for long task lists
+  - [ ] Debounced search/filter
+  - [ ] Optimized bundle size
+  - [ ] Code splitting for routes
 
 #### 2.4 Error Handling & Edge Cases (Day 5)
 
@@ -256,11 +338,20 @@ export const storage = {
 - [ ] Data persisted in LocalStorage
 - [ ] Data preserved on page refresh
 - [ ] Basic UI/UX flows completed
-- [ ] Responsive design working
+- [ ] **Mobile-First Responsive Design**:
+  - [ ] Mobile layout (< 768px) working correctly
+  - [ ] Tablet layout (768px - 1024px) working correctly
+  - [ ] Desktop layout (> 1024px) working correctly
+  - [ ] Touch interactions (swipe, long press) working on mobile
+  - [ ] All interactive elements meet minimum touch target sizes (44x44px)
+  - [ ] No horizontal scrolling on mobile
+  - [ ] Forms work correctly on mobile (no zoom on input focus)
 
 ---
 
 ## Phase 3: Gamification Mechanics (Week 3)
+
+> **📝 Testing Reminder**: Write tests **alongside** each feature. Test edge cases (negative XP, level boundaries, etc.) as you build!
 
 ### 🎯 Sprint Goals
 
@@ -386,11 +477,14 @@ export const storage = {
 
 ## Phase 4: Polish, Testing & Deployment (Week 4)
 
+> **📝 Testing Note**: This phase should focus on **test coverage gaps** and **integration tests**, not writing all tests from scratch. Most tests should already exist from Phases 2-3!
+
 ### 🎯 Sprint Goals
 
 - Code quality improvements
 - Performance optimizations
-- Testing
+- Test coverage review and gap filling
+- Integration and E2E tests
 - Production deployment
 
 ### 📦 Technical Tasks
@@ -432,26 +526,43 @@ export const storage = {
   - Animation performance
   - Re-render optimization
 
-#### 4.3 Testing (Day 3-4)
+#### 4.3 Testing (Ongoing - Write Tests Alongside Features)
 
-- [ ] **Unit Tests** (Vitest):
-  - Utility functions
-  - XP calculation logic
-  - Level progression logic
+> **⚠️ Critical Best Practice**: Tests should be written **alongside feature development**, not left to the end. Writing tests during development ensures:
+> - Edge cases are caught early
+> - Tests cover real usage patterns, not just happy paths
+> - Better code quality and maintainability
+> - Confidence in refactoring
+
+**Testing Strategy**:
+
+- [ ] **Unit Tests** (Vitest) - Write as you build utilities:
+  - Utility functions (✅ xpCalculator.test.ts exists)
+  - XP calculation logic (✅ covered)
+  - Level progression logic (✅ covered)
   - Storage utilities
+  - Form validation logic
 
-- [ ] **Component Tests** (React Testing Library):
+- [ ] **Component Tests** (React Testing Library) - Write as you build components:
   - TaskForm component
   - TaskList component
-  - Progress components
+  - Progress components (✅ ProgressBar.test.tsx exists)
+  - TaskItem component (✅ TaskItem.test.tsx exists - excellent edge case coverage!)
 
-- [ ] **Integration Tests**:
+- [ ] **Integration Tests** - Write as you integrate features:
   - Task CRUD operations
   - XP/Level flow
   - LocalStorage persistence
+  - Store interactions
 
 - [ ] **E2E Tests** (Playwright/Cypress - Optional):
   - Critical user flows
+
+**Test Coverage Goals**:
+- Aim for >80% coverage on critical business logic
+- Focus on edge cases, not just happy paths
+- Test error handling and boundary conditions
+- Use `npm run test:watch` during development for instant feedback
 
 #### 4.4 UI/UX Polish (Day 4)
 
@@ -504,7 +615,532 @@ export const storage = {
 
 ---
 
+## Phase 4.5: Backend & Cloud Data Persistence (Critical - Before Post-MVP Features)
+
+> **⚠️ Critical Architecture Decision**: MVP tamamen client-side (LocalStorage) üzerine kurulu. Bu faz, Post-MVP özelliklerinden (özellikle Collaborative Quests) **önce** tamamlanmalıdır.
+
+### 🎯 Sprint Goals
+
+- Cloud-based data persistence
+- User authentication & accounts
+- Multi-device synchronization
+- Data migration from LocalStorage
+- API infrastructure for future features
+
+### 📦 Technical Tasks
+
+#### 4.5.1 Backend Infrastructure Setup (Week 1)
+
+**Technology Stack**:
+- **Backend**: Node.js + Express (veya Fastify)
+- **Database**: PostgreSQL
+- **Authentication**: JWT + bcrypt (veya Auth0/Firebase Auth)
+- **ORM**: Prisma (veya TypeORM)
+- **Hosting**: Railway, Render, Fly.io, veya AWS
+
+**Project Structure**:
+```
+heropath-backend/
+├── src/
+│   ├── routes/          # API routes
+│   ├── controllers/     # Business logic
+│   ├── models/          # Database models
+│   ├── middleware/      # Auth, validation, etc.
+│   ├── services/        # External services
+│   ├── utils/           # Helper functions
+│   └── types/           # TypeScript types
+├── prisma/
+│   └── schema.prisma    # Database schema
+├── tests/               # Backend tests
+└── package.json
+```
+
+**Database Schema Design**:
+
+```prisma
+// prisma/schema.prisma
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  tasks         Task[]
+  progress      UserProgress?
+  achievements  Achievement[]
+  quests        QuestParticipant[]
+}
+
+model Task {
+  id            String   @id @default(uuid())
+  userId        String
+  title         String
+  description   String?
+  completed     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  completedAt   DateTime?
+  xpValue       Int
+  difficulty    String   // 'easy' | 'medium' | 'hard'
+  category      String?
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([userId, completed])
+}
+
+model UserProgress {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  level             Int      @default(1)
+  currentXP         Int      @default(0)
+  totalXP           Int      @default(0)
+  completedTasksCount Int    @default(0)
+  streak            Int      @default(0)
+  lastActiveDate    DateTime?
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  userId      String
+  type        String   // 'first_task', 'level_5', etc.
+  unlockedAt  DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+}
+
+// For future Collaborative Quests feature
+model Quest {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdBy   String
+  createdAt   DateTime @default(now())
+  deadline    DateTime?
+  
+  participants QuestParticipant[]
+}
+
+model QuestParticipant {
+  id        String   @id @default(uuid())
+  questId   String
+  userId    String
+  joinedAt  DateTime @default(now())
+  
+  quest     Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([questId, userId])
+  @@index([userId])
+}
+```
+
+#### 4.5.2 Authentication System (Week 1-2)
+
+- [ ] **User Registration**:
+  - Email/password signup
+  - Email verification (optional but recommended)
+  - Password strength validation
+  - Duplicate email handling
+
+- [ ] **User Login**:
+  - JWT token generation
+  - Refresh token mechanism
+  - Session management
+  - "Remember me" functionality
+
+- [ ] **Password Management**:
+  - Secure password hashing (bcrypt)
+  - Password reset flow
+  - Password change functionality
+
+- [ ] **API Security**:
+  - JWT middleware for protected routes
+  - Rate limiting
+  - CORS configuration
+  - Input validation & sanitization
+  - **Environment Variables**: API keys (OpenAI, etc.) stored in `.env`, never in code
+  - **Secret Management**: Use secure secret management (Railway/Render secrets, AWS Secrets Manager)
+
+**API Endpoints**:
+```typescript
+POST   /api/auth/register
+POST   /api/auth/login
+POST   /api/auth/refresh
+POST   /api/auth/logout
+POST   /api/auth/forgot-password
+POST   /api/auth/reset-password
+GET    /api/auth/me
+```
+
+#### 4.5.3 Data Sync API (Week 2)
+
+- [ ] **Task Management API**:
+  ```typescript
+  GET    /api/tasks              // Get all user tasks
+  POST   /api/tasks              // Create task
+  GET    /api/tasks/:id          // Get single task
+  PUT    /api/tasks/:id          // Update task
+  DELETE /api/tasks/:id          // Delete task
+  PATCH  /api/tasks/:id/toggle   // Toggle completion
+  ```
+
+- [ ] **Progress API**:
+  ```typescript
+  GET    /api/progress            // Get user progress
+  POST   /api/progress/xp         // Add XP
+  POST   /api/progress/level-up   // Handle level up
+  ```
+
+- [ ] **AI Service API** (For Phase 5.2):
+  ```typescript
+  POST   /api/ai/suggest-tasks    // Get AI task suggestions
+  // Requires: JWT authentication
+  // Security: API key stored server-side only
+  ```
+
+- [ ] **Sync Strategy**:
+  - Optimistic updates (client updates immediately)
+  - Conflict resolution (last-write-wins or merge strategy)
+  - Batch operations for offline sync
+  - Timestamp-based sync (sync only changed data)
+
+#### 4.5.4 Migration from LocalStorage (Week 2-3)
+
+- [ ] **Migration Service with Schema Versioning**:
+  ```typescript
+  // Client-side migration utility
+  interface MigrationService {
+    detectLocalStorageData(): boolean;
+    getDataVersion(): number;
+    exportLocalStorageData(): UserData;
+    importToCloud(data: UserData): Promise<void>;
+    clearLocalStorage(): void;
+  }
+
+  // Schema version tracking
+  interface DataSchema {
+    version: number; // Increment on schema changes
+    tasks: Task[];
+    progress: UserProgress;
+    metadata: {
+      createdAt: string;
+      lastModified: string;
+      schemaVersion: number;
+    };
+  }
+  ```
+
+- [ ] **Schema Migration System**:
+  ```typescript
+  // Migration functions for each schema version
+  interface Migration {
+    fromVersion: number;
+    toVersion: number;
+    migrate: (data: unknown) => unknown;
+  }
+
+  // Example: Adding new field to Task model
+  const migrations: Migration[] = [
+    {
+      fromVersion: 1,
+      toVersion: 2,
+      migrate: (data: TaskV1[]): TaskV2[] => {
+        // Add new 'priority' field with default value
+        return data.map(task => ({
+          ...task,
+          priority: 'medium' // New field with default
+        }));
+      }
+    },
+    {
+      fromVersion: 2,
+      toVersion: 3,
+      migrate: (data: TaskV2[]): TaskV3[] => {
+        // Rename 'xpValue' to 'xpReward'
+        return data.map(task => {
+          const { xpValue, ...rest } = task;
+          return {
+            ...rest,
+            xpReward: xpValue // Renamed field
+          };
+        });
+      }
+    }
+  ];
+  ```
+
+- [ ] **Migration Flow**:
+  1. User signs up/logs in
+  2. Check for LocalStorage data
+  3. **Detect schema version** from stored data
+  4. **Run migration chain** if version mismatch:
+     - Load data with current version
+     - Apply migrations sequentially (v1→v2→v3→...→current)
+     - Validate migrated data
+  5. Prompt user: "We found existing data. Import to cloud?"
+  6. Export LocalStorage data (after migration)
+  7. Send to backend API with schema version info
+  8. Backend validates and imports data
+  9. Backend handles any server-side schema differences
+  10. Clear LocalStorage (or keep as backup)
+  11. Switch to cloud sync
+
+- [ ] **Data Validation & Error Handling**:
+  ```typescript
+  interface ValidationResult {
+    valid: boolean;
+    errors: ValidationError[];
+    warnings: string[];
+  }
+
+  function validateData(data: unknown, schemaVersion: number): ValidationResult {
+    // Validate data structure
+    // Check required fields
+    // Validate data types
+    // Check data ranges (e.g., XP >= 0)
+    // Return detailed validation results
+  }
+  ```
+  - Validate exported data structure
+  - Handle corrupted data gracefully
+  - Preserve all user progress (XP, level, tasks)
+  - **Backward compatibility**: Support multiple schema versions
+  - **Migration rollback**: If migration fails, keep original data
+  - **Partial migration**: Migrate what's possible, report failures
+
+- [ ] **Backend Schema Migration**:
+  - [ ] Database migrations (Prisma migrations)
+  - [ ] API versioning for backward compatibility
+  - [ ] Data transformation on import
+  - [ ] Validation against current schema
+  - [ ] Default values for missing fields
+
+#### 4.5.5 Offline-First Architecture & PWA (Week 3)
+
+- [ ] **PWA Setup**:
+
+  **Web App Manifest** (`public/manifest.json`):
+  ```json
+  {
+    "name": "HeroPath",
+    "short_name": "HeroPath",
+    "description": "Gamified task management",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "categories": ["productivity", "games"],
+    "screenshots": [
+      {
+        "src": "/screenshot-mobile.png",
+        "sizes": "390x844",
+        "type": "image/png",
+        "form_factor": "narrow"
+      }
+    ]
+  }
+  ```
+
+  **PWA Features**:
+  - [ ] Install prompt (custom install button)
+  - [ ] App icons (multiple sizes: 192x192, 512x512, maskable icons)
+  - [ ] Splash screen
+  - [ ] Standalone mode (no browser UI)
+  - [ ] Add to home screen (iOS/Android)
+
+- [ ] **Service Worker** (PWA):
+  ```typescript
+  // Service worker strategy: Network First, Cache Fallback
+  // For API calls: Network First
+  // For static assets: Cache First
+  ```
+
+  **Caching Strategy**:
+  - [ ] Cache API responses (with expiration)
+  - [ ] Cache static assets (CSS, JS, images)
+  - [ ] Cache app shell (HTML, critical CSS/JS)
+  - [ ] Queue offline actions
+  - [ ] Background sync when online
+  - [ ] Cache versioning for updates
+
+  **Service Worker Features**:
+  - [ ] Offline page fallback
+  - [ ] Background sync for queued actions
+  - [ ] Push notifications (optional, for future)
+  - [ ] Update detection and prompt
+
+- [ ] **Mobile PWA Optimizations**:
+  - [ ] **iOS Safari PWA**:
+    - [ ] Apple touch icons
+    - [ ] Status bar styling (`apple-mobile-web-app-status-bar-style`)
+    - [ ] Prevent bounce scrolling
+    - [ ] Viewport fit cover for notched devices
+  - [ ] **Android PWA**:
+    - [ ] Maskable icons for adaptive icons
+    - [ ] Shortcuts (quick actions from home screen)
+    - [ ] Share target API (receive shared content)
+  - [ ] **Performance**:
+    - [ ] Lazy load images
+    - [ ] Optimize images (WebP, responsive images)
+    - [ ] Minimize JavaScript bundle
+    - [ ] Preload critical resources
+
+- [ ] **Client-Side Sync Manager**:
+  ```typescript
+  interface SyncManager {
+    sync(): Promise<void>;
+    isOnline(): boolean;
+    queueAction(action: SyncAction): void;
+    processQueue(): Promise<void>;
+    resolveConflicts(): Promise<void>;
+    getSyncStatus(): SyncStatus;
+  }
+
+  interface SyncAction {
+    id: string;
+    type: 'create' | 'update' | 'delete';
+    entity: 'task' | 'progress';
+    data: unknown;
+    timestamp: number;
+    retryCount: number;
+  }
+  ```
+
+- [ ] **Hybrid Storage Strategy**:
+  - LocalStorage: Cache + offline queue
+  - IndexedDB: For larger data (optional, if LocalStorage insufficient)
+  - Cloud: Source of truth
+  - Sync on app start, on reconnect, periodically
+  - **Conflict Resolution**:
+    - Last-write-wins (with timestamp)
+    - Or merge strategy (for progress data)
+    - User prompt for critical conflicts
+
+- [ ] **Offline UX**:
+  - [ ] Offline indicator (banner/icon)
+  - [ ] Show queued actions count
+  - [ ] Disable online-only features gracefully
+  - [ ] Offline mode messaging
+  - [ ] Sync status indicator
+
+#### 4.5.6 API Client Integration (Week 3-4)
+
+- [ ] **API Client Service**:
+  ```typescript
+  // src/services/apiClient.ts
+  class ApiClient {
+    async getTasks(): Promise<Task[]>;
+    async createTask(task: CreateTaskDto): Promise<Task>;
+    async updateTask(id: string, updates: UpdateTaskDto): Promise<Task>;
+    async deleteTask(id: string): Promise<void>;
+    async syncProgress(progress: ProgressUpdate): Promise<UserProgress>;
+  }
+  ```
+
+- [ ] **Store Integration**:
+  - Update Zustand stores to use API client
+  - Fallback to LocalStorage if offline
+  - Optimistic updates with rollback on error
+
+- [ ] **Error Handling**:
+  - Network error handling
+  - Retry logic with exponential backoff
+  - User-friendly error messages
+  - Offline indicator
+
+#### 4.5.7 Testing & Security (Week 4)
+
+- [ ] **Backend Tests**:
+  - Unit tests for controllers
+  - Integration tests for API endpoints
+  - Database tests
+  - Authentication tests
+
+- [ ] **Security Audit**:
+  - SQL injection prevention (Prisma handles this)
+  - XSS prevention
+  - CSRF protection
+  - Rate limiting
+  - Input validation
+  - **API Key Security**: 
+    - ✅ All API keys (OpenAI, etc.) in environment variables
+    - ✅ Never expose keys to client-side code
+    - ✅ Use serverless functions or backend proxy for AI calls
+    - ✅ Implement API key rotation strategy
+    - ✅ Monitor API usage and costs
+
+- [ ] **Performance**:
+  - Database indexing
+  - Query optimization
+  - API response caching
+  - Connection pooling
+
+### ✅ Definition of Done - Phase 4.5
+
+- [ ] Backend API deployed and accessible
+- [ ] User authentication working (register/login)
+- [ ] All MVP features work with cloud backend
+- [ ] **LocalStorage Migration**:
+  - [ ] Migration flow working end-to-end
+  - [ ] Schema versioning system implemented
+  - [ ] Migration chain handles version upgrades
+  - [ ] Data validation and error handling working
+  - [ ] Backward compatibility for old schema versions
+  - [ ] User data preserved during migration
+- [ ] Multi-device sync working
+- [ ] **PWA & Offline Support**:
+  - [ ] Web App Manifest configured
+  - [ ] Service Worker implemented
+  - [ ] Offline functionality working
+  - [ ] Install prompt working
+  - [ ] App works in standalone mode
+  - [ ] Mobile PWA optimizations (iOS/Android)
+- [ ] All tests passing (backend + frontend)
+- [ ] Security best practices implemented
+  - [ ] API keys stored in environment variables (never in code)
+  - [ ] AI service endpoints ready (for Phase 5.2)
+  - [ ] Rate limiting implemented
+- [ ] API documentation completed
+
+### 🚨 Critical Notes
+
+1. **Timing**: Bu faz **mutlaka** Phase 5 (Post-MVP features) öncesinde tamamlanmalı
+2. **Collaborative Quests**: Backend olmadan imkansız - bu faz tamamlanmadan Phase 5.7'ye geçilmemeli
+3. **AI Security**: AI özellikleri (Phase 5.2) için API key'ler **ASLA** client-side'da kullanılmamalı. Serverless functions veya backend proxy zorunludur.
+4. **User Experience**: Migration sırasında kullanıcı verisi kaybedilmemeli
+5. **Backward Compatibility**: Mevcut LocalStorage kullanıcıları için smooth migration
+
+---
+
 ## Phase 5: Unique & Innovative Features (Post-MVP)
+
+> **⚠️ Prerequisites**: 
+> - Phase 4.5 (Backend & Cloud Data Persistence) **tamamlanmış olmalı**
+> - Collaborative Quests (5.7) için backend zorunludur
+> - AI-Powered Features (5.2) için backend/serverless functions zorunludur (API key güvenliği)
 
 ### 🚀 Market-Differentiating Features
 
@@ -553,14 +1189,16 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 #### 5.2 AI-Powered Task Suggestions ⭐⭐⭐⭐⭐
 
+> **⚠️ Security Critical**: OpenAI API key'leri **ASLA** client-side'da kullanılmamalıdır. Tüm AI çağrıları backend üzerinden yapılmalıdır (Serverless Function veya Proxy sunucusu).
+
 **What it is**: Intelligent task recommendations based on user behavior, time of day, and context.
 
 **Implementation**:
 
-- [ ] **AI Service Integration**:
+- [ ] **Backend AI Service** (Required - Phase 4.5+):
 
   ```typescript
-  // services/aiService.ts
+  // Backend: src/services/aiService.ts
   interface TaskSuggestion {
     title: string;
     description: string;
@@ -571,12 +1209,62 @@ These features set HeroPath apart from standard todo apps and create a unique va
     contextFactors: string[]; // Time, weather, mood, etc.
   }
 
-  // Uses OpenAI API or local ML model
+  // Backend endpoint - OpenAI API key server-side'da saklanır
   async function suggestTasks(
+    userId: string,
     userHistory: Task[],
     currentTime: Date,
     userMood?: string
-  ): Promise<TaskSuggestion[]>;
+  ): Promise<TaskSuggestion[]> {
+    // OpenAI API çağrısı backend'de yapılır
+    // API key environment variable'dan alınır
+  }
+  ```
+
+- [ ] **Backend API Endpoint**:
+  ```typescript
+  POST   /api/ai/suggest-tasks
+  // Request body: { userHistory, currentTime, userMood? }
+  // Response: { suggestions: TaskSuggestion[] }
+  // Authentication: JWT token required
+  ```
+
+- [ ] **Serverless Function Option** (Alternative):
+  ```typescript
+  // Vercel/Netlify Serverless Function
+  // api/ai/suggest-tasks.ts
+  export default async function handler(req, res) {
+    // Verify JWT token
+    // Call OpenAI API with server-side key
+    // Return suggestions
+  }
+  ```
+
+- [ ] **Security Implementation**:
+  - ✅ API key stored in environment variables (never in code)
+  - ✅ Rate limiting per user
+  - ✅ Request authentication (JWT)
+  - ✅ Input validation & sanitization
+  - ✅ Cost monitoring & limits
+  - ❌ Never expose API key to client
+
+- [ ] **Client-Side Integration**:
+  ```typescript
+  // Frontend: src/services/aiClient.ts
+  class AIClient {
+    async getTaskSuggestions(context: TaskContext): Promise<TaskSuggestion[]> {
+      // Backend API'ye istek atar (API key yok)
+      const response = await fetch('/api/ai/suggest-tasks', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(context)
+      });
+      return response.json();
+    }
+  }
   ```
 
 - [ ] **Context-Aware Suggestions**:
@@ -590,7 +1278,19 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - "Based on your goals, here's a task that might help"
   - "You haven't done Y in a while, want to revisit it?"
 
+- [ ] **Cost Optimization**:
+  - Cache suggestions (avoid repeated API calls)
+  - Batch requests when possible
+  - Use cheaper models for simple suggestions
+  - Implement request debouncing
+
 **Why it's unique**: Proactive, intelligent assistance that learns from user behavior.
+
+**Technical Requirements**:
+- ✅ Backend API (Phase 4.5)
+- ✅ Environment variable management
+- ✅ Rate limiting
+- ✅ Authentication middleware
 
 ---
 
@@ -768,11 +1468,13 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 #### 5.7 Collaborative Quests ⭐⭐⭐
 
+> **⚠️ Backend Required**: Bu özellik **mutlaka** Phase 4.5 (Backend & Cloud Data Persistence) tamamlandıktan sonra implement edilmelidir. LocalStorage tabanlı bir sistemde collaborative features imkansızdır.
+
 **What it is**: Friends can join together to complete shared quests and challenges.
 
 **Implementation**:
 
-- [ ] **Quest System**:
+- [ ] **Quest System** (Backend API Required):
 
   ```typescript
   interface CollaborativeQuest {
@@ -790,6 +1492,22 @@ These features set HeroPath apart from standard todo apps and create a unique va
   }
   ```
 
+- [ ] **Backend API Endpoints**:
+  ```typescript
+  POST   /api/quests                    // Create quest
+  GET    /api/quests                    // List available quests
+  GET    /api/quests/:id                // Get quest details
+  POST   /api/quests/:id/join           // Join quest
+  POST   /api/quests/:id/leave          // Leave quest
+  GET    /api/quests/:id/progress       // Get quest progress
+  POST   /api/quests/:id/complete-task  // Complete shared task
+  ```
+
+- [ ] **Real-time Updates** (Optional - WebSocket):
+  - Live progress updates
+  - Participant notifications
+  - Quest completion celebrations
+
 - [ ] **Social Features**:
   - Friend system (optional, privacy-focused)
   - Shared quest boards
@@ -799,9 +1517,15 @@ These features set HeroPath apart from standard todo apps and create a unique va
 - [ ] **Privacy-First Design**:
   - All social features opt-in
   - No data sharing without consent
-  - Local-first, sync optional
+  - User controls visibility settings
 
 **Why it's unique**: Social productivity without compromising privacy.
+
+**Technical Requirements**:
+- ✅ Backend API (Phase 4.5)
+- ✅ User authentication
+- ✅ Real-time sync (WebSocket optional)
+- ✅ Database relationships (Quest ↔ Users)
 
 ---
 
@@ -1021,15 +1745,33 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 ### 🎯 Implementation Priority
 
-**Phase 5.1 - High Priority (Month 2)**
+**⚠️ CRITICAL - Must Complete Before Phase 5**
+
+**Phase 4.5 - Backend & Cloud Data Persistence** (Month 2, Week 1-4)
+- **MUST** be completed before any Phase 5 features
+- Required for: Collaborative Quests, Multi-device sync, Data persistence
+- Without this, users lose all data on browser clear/device switch
+
+**Phase 5.1 - High Priority (Month 2-3, After Phase 4.5)**
 
 1. Visual Hero Character Progression
 2. Skill Tree System
 3. Narrative Journey System (basic)
 
-**Phase 5.2 - Medium Priority (Month 3)** 4. AI-Powered Task Suggestions 5. Visual Journey Map 6. Emotional State Tracking
+**Phase 5.2 - Medium Priority (Month 3-4)**
 
-**Phase 5.3 - Future Enhancements (Month 4+)** 7. Context-Aware Recommendations 8. Time-Based Challenges 9. Collaborative Quests 10. Dynamic Difficulty Adjustment 11. Real-World Habit Integration 12. Story Mode & Narrative Choices
+4. **AI-Powered Task Suggestions** (Requires Phase 4.5 ✅ + Serverless/Backend for API key security)
+5. Visual Journey Map
+6. Emotional State Tracking
+
+**Phase 5.3 - Future Enhancements (Month 4+)**
+
+7. Context-Aware Recommendations
+8. Time-Based Challenges
+9. **Collaborative Quests** (Requires Phase 4.5 ✅)
+10. Dynamic Difficulty Adjustment
+11. Real-World Habit Integration
+12. Story Mode & Narrative Choices
 
 ---
 
@@ -1082,6 +1824,20 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Error handling
   - Data validation
 
+#### 5.5. **Backend Development** ⭐⭐⭐⭐⭐ (Phase 4.5)
+
+- **Goal**: Full-stack development with cloud persistence
+- **Learnings**:
+  - Node.js/Express API development
+  - PostgreSQL database design
+  - RESTful API design
+  - Authentication & authorization (JWT)
+  - Database migrations
+  - API testing
+  - Security best practices
+  - Offline-first architecture
+  - Data synchronization strategies
+
 #### 6. **AI/ML Integration** ⭐⭐⭐⭐ (Post-MVP)
 
 - **Goal**: Intelligent features
@@ -1091,7 +1847,30 @@ These features set HeroPath apart from standard todo apps and create a unique va
   - Recommendation algorithms
   - Privacy-first AI
 
-#### 7. **Advanced Animations** ⭐⭐⭐ (Post-MVP)
+#### 7. **Mobile & PWA Development** ⭐⭐⭐⭐ (Phase 2.3, 4.5.5)
+
+- **Goal**: Native-like mobile experience
+- **Learnings**:
+  - Mobile-first responsive design
+  - Touch interactions and gestures
+  - PWA implementation (Service Worker, Manifest)
+  - Offline-first architecture
+  - Mobile performance optimization
+  - iOS/Android PWA specific features
+  - App installation and update flows
+
+#### 8. **Data Migration & Schema Evolution** ⭐⭐⭐⭐ (Phase 4.5.4)
+
+- **Goal**: Safe data migration without data loss
+- **Learnings**:
+  - Schema versioning strategies
+  - Migration chain implementation
+  - Backward compatibility patterns
+  - Data validation and error handling
+  - Rollback strategies
+  - Database migration tools (Prisma)
+
+#### 9. **Advanced Animations** ⭐⭐⭐ (Post-MVP)
 
 - **Goal**: Delightful user experience
 - **Learnings**:
@@ -1270,7 +2049,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 ## 🛠️ Technology Stack
 
-### Core
+### Frontend (MVP)
 
 - **React 18+** - UI library
 - **TypeScript** - Type safety
@@ -1279,7 +2058,7 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 ### State Management
 
-- **Zustand** or **Jotai** - State management
+- **Zustand** - State management (with LocalStorage persistence)
 
 ### Development Tools
 
@@ -1288,18 +2067,60 @@ These features set HeroPath apart from standard todo apps and create a unique va
 - **Vitest** - Testing framework
 - **React Testing Library** - Component testing
 
-### Deployment
+### Frontend Deployment (MVP)
 
 - **Vercel** (Recommended) - Hosting
 
-### Optional
+### Backend (Phase 4.5 - Required for Post-MVP)
+
+- **Node.js** - Runtime
+- **Express** or **Fastify** - Web framework
+- **PostgreSQL** - Database
+- **Prisma** - ORM (type-safe database access)
+- **JWT** - Authentication
+- **bcrypt** - Password hashing
+
+### Backend Deployment (Phase 4.5)
+
+- **Railway** (Recommended - easy PostgreSQL + Node.js)
+- **Render** - Alternative option
+- **Fly.io** - Alternative option
+- **AWS** - Enterprise option
+
+### AI Service Deployment Options (Phase 5.2)
+
+- **Vercel Serverless Functions** (Recommended for frontend on Vercel)
+  - Edge functions for low latency
+  - Environment variables for API keys
+  - Built-in rate limiting
+- **Netlify Functions** (If using Netlify)
+- **Backend API Endpoint** (If using Railway/Render)
+  - Dedicated `/api/ai/*` routes
+  - More control over caching and rate limiting
+
+### PWA & Mobile (Phase 4.5.5)
+
+- **Workbox** (Recommended) - Service Worker library
+- **vite-plugin-pwa** - PWA plugin for Vite
+- **Web App Manifest** - PWA configuration
+- **IndexedDB** (Optional) - For larger offline storage if needed
+
+### Optional Frontend Libraries
 
 - **Framer Motion** - Animations
 - **React Hook Form** - Form management
-- **Zod** - Schema validation
+- **Zod** - Schema validation (already in use)
 - **OpenAI API** - AI features (Post-MVP)
 - **Canvas API** - Journey map rendering (Post-MVP)
 - **SVG** - Character and map visuals (Post-MVP)
+- **WebSocket** (Socket.io) - Real-time features (Post-MVP)
+
+### Mobile Development Tools
+
+- **Chrome DevTools** - Mobile device emulation
+- **Lighthouse** - PWA audit
+- **WebPageTest** - Mobile performance testing
+- **BrowserStack / Sauce Labs** - Real device testing (optional)
 
 ---
 
@@ -1324,15 +2145,47 @@ These features set HeroPath apart from standard todo apps and create a unique va
 
 - [Web.dev Performance](https://web.dev/performance/)
 
+### Backend Development (Phase 4.5)
+
+- [Node.js Documentation](https://nodejs.org/docs)
+- [Express.js Guide](https://expressjs.com/en/guide/routing.html)
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/current/tutorial.html)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [JWT Authentication Best Practices](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+- [REST API Design](https://restfulapi.net/)
+- [Database Design Principles](https://www.postgresql.org/docs/current/ddl.html)
+
 ### AI Integration
 
 - [OpenAI API Documentation](https://platform.openai.com/docs)
 - [AI Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
+- [OpenAI API Security Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
+- [Serverless Functions Security](https://vercel.com/docs/functions/security)
+- [API Key Management Best Practices](https://cheatsheetseries.owasp.org/cheatsheets/API_Security_Cheat_Sheet.html)
+- **Critical**: Never expose API keys in client-side code. Always use backend/serverless functions.
 
 ### Game Design & Gamification
 
 - [Gamification Design Patterns](https://www.gamified.uk/gamification-examples/)
 - [Game Design Principles](https://www.gamedeveloper.com/design)
+
+### PWA & Mobile Development
+
+- [PWA Documentation (MDN)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+- [Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+- [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+- [Workbox Documentation](https://developers.google.com/web/tools/workbox)
+- [Mobile-First Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+- [Touch Events API](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events)
+- [iOS PWA Best Practices](https://webkit.org/blog/8042/progressive-web-apps/)
+- [Android PWA Best Practices](https://web.dev/add-to-home-screen/)
+- [Responsive Images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
+
+### Data Migration & Schema Versioning
+
+- [Database Migration Best Practices](https://www.prisma.io/docs/guides/migrate)
+- [Schema Evolution Strategies](https://martinfowler.com/articles/evodb.html)
+- [Data Versioning Patterns](https://www.martinfowler.com/articles/schemaless/)
 
 ---
 
@@ -1344,7 +2197,24 @@ Each phase builds upon the previous one, and each week ends with a working, depl
 
 **Agile approach** ensures testable, deployable increments at the end of each week.
 
-**The unique features in Phase 5** create a compelling value proposition that no other todo app offers:
+### ⚠️ Critical Architecture Note
+
+**Phase 4.5 (Backend & Cloud Data Persistence)** is **mandatory** before implementing Post-MVP features. The MVP uses LocalStorage, which means:
+- ❌ Users lose data on browser clear
+- ❌ No multi-device sync
+- ❌ Collaborative features impossible
+- ❌ Data not backed up
+
+**Phase 4.5 solves these issues** and enables:
+- ✅ Cloud persistence
+- ✅ Multi-device sync
+- ✅ User accounts
+- ✅ Collaborative Quests
+- ✅ Data backup & recovery
+
+### 🚀 Unique Features (Phase 5)
+
+The unique features in Phase 5 create a compelling value proposition that no other todo app offers:
 
 - Narrative storytelling
 - Visual character progression
@@ -1352,5 +2222,6 @@ Each phase builds upon the previous one, and each week ends with a working, depl
 - AI-powered assistance
 - Skill-based development
 - Interactive journey maps
+- **Collaborative Quests** (requires Phase 4.5)
 
 **Good luck! 🚀**

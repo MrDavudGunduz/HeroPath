@@ -11,8 +11,8 @@ on:
       - develop
 
 jobs:
-  lint-and-build:
-    name: Lint and Build
+  lint-test-build:
+    name: Lint, Test and Build
     runs-on: ubuntu-latest
 
     strategy:
@@ -42,6 +42,22 @@ jobs:
         working-directory: ./HeroPath
         run: npm run format:check
 
+      - name: Run tests
+        working-directory: ./HeroPath
+        run: npm run test:run
+
+      - name: Generate test coverage
+        working-directory: ./HeroPath
+        run: npm run test:coverage
+
+      - name: Upload test coverage
+        if: matrix.node-version == '20.x'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-coverage
+          path: HeroPath/coverage
+          retention-days: 7
+
       - name: Build project
         working-directory: ./HeroPath
         run: npm run build
@@ -53,40 +69,3 @@ jobs:
           name: build-artifacts
           path: HeroPath/dist
           retention-days: 7
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-          cache-dependency-path: HeroPath/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ./HeroPath
-        run: npm ci
-
-      - name: Run tests
-        working-directory: ./HeroPath
-        run: npm run test:run
-
-      - name: Generate test coverage
-        working-directory: ./HeroPath
-        run: npm run test:coverage
-        continue-on-error: true
-
-      - name: Upload test coverage
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-coverage
-          path: HeroPath/coverage
-          retention-days: 7
-        continue-on-error: true
